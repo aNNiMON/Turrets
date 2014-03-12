@@ -53,6 +53,7 @@ public class MenuPanel extends JPanel {
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         // Init panel
+        setPreferredSize(Constants.SCREEN_DIMENSION);
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         add(menuList, BorderLayout.SOUTH);
@@ -68,6 +69,8 @@ public class MenuPanel extends JPanel {
             final int index = menuList.getSelectedIndex();
             switch (index) {
                 case 0:
+                    GameCanvas canvas = new GameCanvas();
+                    Main.getInstance().switchLayout(canvas);
                     break;
                 case 4:
                     System.exit(0);
