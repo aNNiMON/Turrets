@@ -53,9 +53,8 @@ public class MenuPanel extends JPanel {
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         // Init panel
-        setBackground(Color.BLACK);
-        
         setLayout(new BorderLayout());
+        setBackground(Color.BLACK);
         add(menuList, BorderLayout.SOUTH);
         add(titleLabel, BorderLayout.CENTER);
     }

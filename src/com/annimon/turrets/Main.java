@@ -2,6 +2,7 @@ package com.annimon.turrets;
 
 import java.awt.Dimension;
 import javax.swing.JFrame;
+import javax.swing.JLayer;
 import javax.swing.WindowConstants;
 
 /**
@@ -9,9 +10,16 @@ import javax.swing.WindowConstants;
  * @author aNNiMON
  */
 public class Main extends JFrame {
+    
+    private static Main instance;
 
     public static void main(String[] args) {
-        new Main().setVisible(true);
+        Main.getInstance().setVisible(true);
+    }
+    
+    public static synchronized Main getInstance() {
+        if (instance == null) instance = new Main();
+        return instance;
     }
 
     public Main() {
@@ -21,8 +29,7 @@ public class Main extends JFrame {
         setLocationByPlatform(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
-        add(new MenuPanel());
+        add(new JLayer<>(new MenuPanel(), new LayerUI.GradientBackground()));
         pack();
     }
-    
 }
