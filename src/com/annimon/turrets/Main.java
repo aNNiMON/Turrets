@@ -1,6 +1,6 @@
 package com.annimon.turrets;
 
-import java.awt.Dimension;
+import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JLayer;
 import javax.swing.WindowConstants;
@@ -24,12 +24,17 @@ public class Main extends JFrame {
 
     public Main() {
         super("Turrets");
-        setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
         setResizable(Constants.RESIZABLE);
         setLocationByPlatform(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
         add(new JLayer<>(new MenuPanel(), new LayerUI.GradientBackground()));
+        pack();
+    }
+    
+    public void switchLayout(Component component) {
+        getContentPane().removeAll();
+        getContentPane().add(component);
         pack();
     }
 }
