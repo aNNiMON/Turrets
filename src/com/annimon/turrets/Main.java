@@ -24,8 +24,8 @@ public class Main extends JFrame {
 
     public Main() {
         super("Turrets");
-        setPreferredSize(new Dimension(800, 600));
-        setResizable(false);
+        setPreferredSize(new Dimension(Constants.WIDTH, Constants.HEIGHT));
+        setResizable(Constants.RESIZABLE);
         setLocationByPlatform(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
