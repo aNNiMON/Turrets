@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.Random;
 
 /**
- *
+ * Destructible terrain.
  * @author aNNiMON
  */
 public class Terrain implements Constants {
@@ -34,7 +34,6 @@ public class Terrain implements Constants {
     public void destroyTerrain(int x) {
         final int position = x / blockSize;
         final int explosionSize = PLAYERS_BLOCK_COUNT / 2;
-        System.out.println(position);
         if ( (position <= PLAYERS_BLOCK_COUNT) ||
              (position >= blocksCount - PLAYERS_BLOCK_COUNT - 1) ) return;
         
