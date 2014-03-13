@@ -34,6 +34,7 @@ public class MenuPanel extends JPanel {
         menuList = new JList<>(MENU_ITEMS);
         menuList.setOpaque(false);
         menuList.setFont(new Font("Stencil", Font.BOLD, 42));
+        menuList.setForeground(Color.GRAY);
         menuList.setBackground(Color.BLACK);
         menuList.setSelectionBackground(Color.BLACK);
         menuList.setSelectionForeground(TITLE_COLOR);
