@@ -15,7 +15,7 @@ public class Background implements Constants {
     private final double shadeAmount;
 
     public Background() {
-        bg = new Color(Util.randomColor(0, 35));
+        bg = new Color(Util.randomColor(0, 15));
         color = new Color(Util.randomColor(150, 235));
         shadeAmount = Util.rand(0.5, 2.5);
     }
