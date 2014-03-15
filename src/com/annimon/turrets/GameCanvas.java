@@ -2,6 +2,7 @@ package com.annimon.turrets;
 
 import java.awt.Canvas;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 /**
@@ -10,7 +11,7 @@ import java.awt.image.BufferedImage;
  */
 public class GameCanvas extends Canvas {
     
-    private final Graphics G;
+    private final Graphics2D G;
     private final BufferedImage buffer;
     private final Terrain terrain;
     private BufferedImage background;
