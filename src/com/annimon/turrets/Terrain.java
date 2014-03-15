@@ -71,6 +71,10 @@ public class Terrain implements Constants {
             if (blockHeights[i] > maxHeight) blockHeights[i] = maxHeight;
             else if (blockHeights[i] < 0) blockHeights[i] = 0;
         }
+        // Smooth blocks
+        for (int i = 1; i < blocksCount - 1; i += 2) {
+            blockHeights[i] = (blockHeights[i - 1] + blockHeights[i + 1]) / 2;
+        }
         // Flatten out left and right blocks for turrets.
         for (int i = 0; i < PLAYERS_BLOCK_COUNT; i++) {
             blockHeights[i] = getFirstBlockHeight();
