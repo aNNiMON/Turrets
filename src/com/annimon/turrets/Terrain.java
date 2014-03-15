@@ -63,7 +63,7 @@ public class Terrain implements Constants {
     public void generate(long seed) {
         final Random rnd = new Random(seed);
         final int maxHeight = HEIGHT / 2;
-        final int stepHeight = maxHeight / 100 * blockSize;
+        final int stepHeight = maxHeight / 75 * blockSize;
         
         blockHeights[0] = rnd.nextInt(maxHeight);
         for (int i = 1; i < blocksCount; i++) {
