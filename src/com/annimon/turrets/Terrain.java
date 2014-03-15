@@ -12,7 +12,8 @@ public class Terrain implements Constants {
 
     private static final Color TERRAIN_COLOR = new Color(0xFF269920);
     private static final int PLAYERS_BLOCK_COUNT = 24;
-    
+    private static final int SMOOTH_ITERATIONS = 10;
+
     private final int blocksCount;
     private final int blockSize;
     private final int[] blockHeights;
@@ -71,14 +72,17 @@ public class Terrain implements Constants {
             if (blockHeights[i] > maxHeight) blockHeights[i] = maxHeight;
             else if (blockHeights[i] < 0) blockHeights[i] = 0;
         }
-        // Smooth blocks
-        for (int i = 1; i < blocksCount - 1; i += 2) {
-            blockHeights[i] = (blockHeights[i - 1] + blockHeights[i + 1]) / 2;
-        }
         // Flatten out left and right blocks for turrets.
         for (int i = 0; i < PLAYERS_BLOCK_COUNT; i++) {
             blockHeights[i] = getFirstBlockHeight();
             blockHeights[blocksCount - i - 1] = getLastBlockHeight();
+        }
+        // Smooth blocks
+        final int halfCount = PLAYERS_BLOCK_COUNT / 2;
+        for (int start = 1; start <= SMOOTH_ITERATIONS; start++) {
+            for (int i = start + halfCount; i < blocksCount - halfCount; i += 2) {
+                blockHeights[i] = (blockHeights[i - 1] + blockHeights[i + 1]) / 2;
+            }
         }
     }
 }
