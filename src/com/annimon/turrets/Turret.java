@@ -14,7 +14,7 @@ public class Turret implements Constants {
     private static final double ANGLE_45 = Math.PI / 4d;
     private static final double ANGLE_90 = Math.PI / 2d;
     private static final int TURRET_WIDTH = PLAYERS_BLOCK_COUNT;
-    private static final int TURRET_HEIGHT = PLAYERS_BLOCK_COUNT;
+    private static final int TURRET_HEIGHT = PLAYERS_BLOCK_COUNT + 1;
 
     private final int turretX, turretY;
     private final int barrelRadius;
@@ -35,7 +35,7 @@ public class Turret implements Constants {
     
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
-        g.drawLine(turretX, Constants.HEIGHT - turretY - 1, barrelX, Constants.HEIGHT - barrelY);
+        g.drawLine(turretX, Constants.HEIGHT - turretY, barrelX, Constants.HEIGHT - barrelY);
         g.setColor(server ? Color.BLUE : Color.RED);
         g.fillArc(turretX - TURRET_WIDTH / 2, Constants.HEIGHT - turretY - TURRET_HEIGHT / 2,
                 TURRET_WIDTH, TURRET_HEIGHT, 0, 180);
@@ -61,6 +61,17 @@ public class Turret implements Constants {
                 g.drawLine((int) x, Constants.HEIGHT - (int) y, (int) x, Constants.HEIGHT - (int) y);
                 isOver = (x < 0) || (x >= Constants.WIDTH) || (y < 0);
             } while (!isOver);
+        }
+    }
+    
+    public void setBarrelParams(int x, int y) {
+        double angle = Math.atan2(y - turretY, x - turretX);
+        if (!server) angle = Math.PI - angle;
+        if ( (0d <= angle) && (angle <= ANGLE_90) ) {
+            barrelAngle = angle;
+            final int xlocal = (server ? x : Constants.WIDTH - x);
+            shotPower = Math.sqrt(xlocal*xlocal + y*y) / (double) Constants.WIDTH;
+            calculateBarrelPosition();
         }
     }
     
