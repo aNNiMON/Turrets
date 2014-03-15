@@ -1,7 +1,8 @@
 package com.annimon.turrets;
 
 import java.awt.Color;
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.LinearGradientPaint;
 import java.util.Random;
 
 /**
@@ -10,12 +11,16 @@ import java.util.Random;
  */
 public class Terrain implements Constants {
 
-    private static final Color TERRAIN_COLOR = new Color(0xFF269920);
+    private static final Color[] TERRAIN_COLOR = {
+        new Color(0xFF33CE2B), new Color(0xFF1C7317)
+    };
     private static final int SMOOTH_ITERATIONS = 10;
-
+    
     private final int blocksCount;
     private final int blockSize;
     private final int[] blockHeights;
+    
+    private LinearGradientPaint gradientPaint;
 
     public Terrain(int blocksCount) {
         this.blocksCount = blocksCount;
@@ -23,8 +28,8 @@ public class Terrain implements Constants {
         blockHeights = new int[blocksCount];
     }
     
-    public void draw(Graphics g) {
-        g.setColor(TERRAIN_COLOR);
+    public void draw(Graphics2D g) {
+        g.setPaint(gradientPaint);
         for (int i = 0; i < blocksCount; i++) {
             final int blockHeight = blockHeights[i];
             g.fillRect(i * blockSize, HEIGHT - blockHeight, blockSize, blockHeight);
@@ -65,11 +70,15 @@ public class Terrain implements Constants {
         final int maxHeight = HEIGHT / 2;
         final int stepHeight = maxHeight / 75 * blockSize;
         
+        int maxBlockHeight = 0;
         blockHeights[0] = rnd.nextInt(maxHeight);
         for (int i = 1; i < blocksCount; i++) {
-            blockHeights[i] = blockHeights[i - 1] + rnd.nextInt(2 * stepHeight + 1) - stepHeight;
-            if (blockHeights[i] > maxHeight) blockHeights[i] = maxHeight;
-            else if (blockHeights[i] < 0) blockHeights[i] = 0;
+            int value = blockHeights[i - 1] + rnd.nextInt(2 * stepHeight + 1) - stepHeight;
+            if (value > maxHeight) value = maxHeight;
+            else if (blockHeights[i] < 0) value = 0;
+            blockHeights[i] = value;
+            // Detect max block height
+            if (maxBlockHeight < value) maxBlockHeight = value;
         }
         // Flatten out left and right blocks for turrets.
         for (int i = 0; i < PLAYERS_BLOCK_COUNT; i++) {
@@ -83,5 +92,10 @@ public class Terrain implements Constants {
                 blockHeights[i] = (blockHeights[i - 1] + blockHeights[i + 1]) / 2;
             }
         }
+        
+        gradientPaint = new LinearGradientPaint(
+                0, Constants.HEIGHT - maxBlockHeight,
+                0, Constants.HEIGHT,
+                new float[] {0f, 1f}, TERRAIN_COLOR);
     }
 }
