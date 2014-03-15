@@ -17,5 +17,6 @@ public interface Constants {
     public static final boolean DEBUG_MODE = true;
     
     // Game
+    public static final double GRAVITATION_ACCELERATION = 9.81;
     public static final int PLAYERS_BLOCK_COUNT = 24;
 }
