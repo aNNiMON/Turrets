@@ -72,6 +72,7 @@ public class MenuPanel extends JPanel {
                 case 0:
                     GameCanvas canvas = new GameCanvas();
                     Main.getInstance().switchLayout(canvas);
+                    canvas.start();
                     break;
                 case 4:
                     System.exit(0);
