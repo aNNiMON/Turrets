@@ -41,7 +41,6 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
     @Override
     public void paint(Graphics g) {
         draw(G);
-        G.dispose();
         g.drawImage(buffer, 0, 0, null);
     }
     
