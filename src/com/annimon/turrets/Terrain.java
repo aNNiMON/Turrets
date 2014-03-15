@@ -75,7 +75,7 @@ public class Terrain implements Constants {
         for (int i = 1; i < blocksCount; i++) {
             int value = blockHeights[i - 1] + rnd.nextInt(2 * stepHeight + 1) - stepHeight;
             if (value > maxHeight) value = maxHeight;
-            else if (blockHeights[i] < 0) value = 0;
+            else if (value < 0) value = 0;
             blockHeights[i] = value;
             // Detect max block height
             if (maxBlockHeight < value) maxBlockHeight = value;
