@@ -9,12 +9,11 @@ import java.awt.image.BufferedImage;
  *
  * @author aNNiMON
  */
-public class GameCanvas extends Canvas {
+public abstract class GameCanvas extends Canvas {
     
     private final Graphics2D G;
     private final BufferedImage buffer;
-    private final Terrain terrain;
-    private BufferedImage background;
+    private final DrawingThread thread;
     
     public GameCanvas() {
         setSize(Constants.WIDTH, Constants.HEIGHT);
@@ -22,18 +21,21 @@ public class GameCanvas extends Canvas {
         
         buffer = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
         G = buffer.createGraphics();
-        
-        initBackground();
-        terrain = new Terrain(Constants.WIDTH);
-        terrain.generate(System.currentTimeMillis());
-        
-        new DrawingThread().start();
+        thread = new DrawingThread();
+    }
+    
+    public void start() {
+        thread.start();
+    }
+    
+    public void stop() {
+        thread.keepRunning = false;
     }
 
     @Override
     public void paint(Graphics g) {
-        G.drawImage(background, 0, 0, null);
-        terrain.draw(G);
+        draw(G);
+        G.dispose();
         g.drawImage(buffer, 0, 0, null);
     }
     
@@ -42,20 +44,18 @@ public class GameCanvas extends Canvas {
         paint(g);
     }
     
-    private void initBackground() {
-        background = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
-        Graphics g = background.createGraphics();
-        new Background().draw(g);
-        g.dispose();
-    }
+    protected abstract void draw(Graphics2D g);
+
+    protected abstract void update();
     
-    private class DrawingThread extends Thread {
+    private final class DrawingThread extends Thread {
 
         private boolean keepRunning = true;
 
         @Override
         public void run() {
             while (keepRunning) {
+                update();
                 try {
                     Thread.sleep(100);
                 } catch (InterruptedException ex) {}
