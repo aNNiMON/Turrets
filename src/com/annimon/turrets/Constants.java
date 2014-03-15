@@ -15,4 +15,7 @@ public interface Constants {
     
     // Parameters
     public static final boolean DEBUG_MODE = true;
+    
+    // Game
+    public static final int PLAYERS_BLOCK_COUNT = 24;
 }

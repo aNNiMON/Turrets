@@ -11,7 +11,6 @@ import java.util.Random;
 public class Terrain implements Constants {
 
     private static final Color TERRAIN_COLOR = new Color(0xFF269920);
-    private static final int PLAYERS_BLOCK_COUNT = 24;
     private static final int SMOOTH_ITERATIONS = 10;
 
     private final int blocksCount;
