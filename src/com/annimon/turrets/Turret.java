@@ -39,6 +39,29 @@ public class Turret implements Constants {
         g.setColor(server ? Color.BLUE : Color.RED);
         g.fillArc(turretX - TURRET_WIDTH / 2, Constants.HEIGHT - turretY - TURRET_HEIGHT / 2,
                 TURRET_WIDTH, TURRET_HEIGHT, 0, 180);
+        if (DEBUG_MODE) {
+            g.setColor(Color.RED);
+            double x = barrelX;
+            double y = barrelY;
+            final double speed = shotPower * (Constants.WIDTH / 80d);
+            final double windSpeed = 0d;
+            final double speedX = speed * Math.cos(barrelAngle);
+            final double vsin = speed * Math.sin(barrelAngle);
+            
+            boolean isOver;
+            double t = 0;
+            do {
+                final double speedY = vsin - GRAVITATION_ACCELERATION * t;
+                // The longer the missile flight, the greater the wind impact.
+                if (server) x += speedX + Math.sin(t) * windSpeed;
+                else x -= speedX + Math.sin(t) * windSpeed;
+                y += speedY;
+                t += 0.01;
+                
+                g.drawLine((int) x, Constants.HEIGHT - (int) y, (int) x, Constants.HEIGHT - (int) y);
+                isOver = (x < 0) || (x >= Constants.WIDTH) || (y < 0);
+            } while (!isOver);
+        }
     }
     
     private void calculateBarrelPosition() {
