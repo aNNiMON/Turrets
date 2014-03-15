@@ -9,13 +9,13 @@ import java.awt.image.BufferedImage;
  *
  * @author aNNiMON
  */
-public abstract class GameCanvas extends Canvas {
+public abstract class DoubleBufferedCanvas extends Canvas {
     
     private final Graphics2D G;
     private final BufferedImage buffer;
     private final DrawingThread thread;
     
-    public GameCanvas() {
+    public DoubleBufferedCanvas() {
         setSize(Constants.WIDTH, Constants.HEIGHT);
         setPreferredSize(Constants.SCREEN_DIMENSION);
         
