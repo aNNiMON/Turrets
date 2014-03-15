@@ -53,8 +53,7 @@ public class Turret implements Constants {
             shootInfo.draw(g);
             if (shootInfo.isOver()) {
                 shootState = false;
-            }
-            if (shootInfo.isCollideTerrain(terrain)) {
+            } else if (shootInfo.isCollideTerrain(terrain)) {
                 shootState = false;
                 terrain.destroyTerrain((int) shootInfo.x);
             }
@@ -85,6 +84,8 @@ public class Turret implements Constants {
     }
     
     public void setBarrelParams(int x, int y) {
+        if (shootState) return;
+        
         double angle = Math.atan2(y - turretY, x - turretX);
         if (!server) angle = Math.PI - angle;
         if ( (0d <= angle) && (angle <= ANGLE_90) ) {
@@ -96,6 +97,8 @@ public class Turret implements Constants {
     }
     
     public void shoot() {
+        if (shootState) return;
+        
         shootState = true;
         shootInfo.reset();
         shootInfo.x = barrelX;
