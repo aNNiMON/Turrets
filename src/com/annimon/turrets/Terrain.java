@@ -65,15 +65,14 @@ public class Terrain implements Constants {
         return blockHeights[blocksCount - 1];
     }
     
-    public void generate(long seed) {
-        final Random rnd = new Random(seed);
+    public void generate() {
         final int maxHeight = HEIGHT / 2;
         final int stepHeight = maxHeight / 75 * blockSize;
         
         int maxBlockHeight = 0;
-        blockHeights[0] = rnd.nextInt(maxHeight);
+        blockHeights[0] = Util.rand(maxHeight);
         for (int i = 1; i < blocksCount; i++) {
-            int value = blockHeights[i - 1] + rnd.nextInt(2 * stepHeight + 1) - stepHeight;
+            int value = blockHeights[i - 1] + Util.rand(-stepHeight, stepHeight);
             if (value > maxHeight) value = maxHeight;
             else if (value < 0) value = 0;
             blockHeights[i] = value;

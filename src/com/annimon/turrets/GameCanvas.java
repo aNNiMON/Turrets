@@ -102,8 +102,12 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     }
     
     private void startGame(long seed) {
+        Util.setRandomSeed(seed);
+        // Reinit background with same seed on server and client.
+        initBackground();
+        
         terrain = new Terrain(Constants.WIDTH);
-        terrain.generate(seed);
+        terrain.generate();
         
         serverTurret = new Turret(Turret.SERVER, terrain.getFirstBlockHeight(), terrain);
         serverTurret.setTurretListener(serverTurretListener);
