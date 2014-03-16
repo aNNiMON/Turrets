@@ -28,14 +28,7 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
         buffer = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
         G = buffer.createGraphics();
         thread = new DrawingThread();
-    }
-    
-    public void start() {
         thread.start();
-    }
-    
-    public void stop() {
-        thread.keepRunning = false;
     }
 
     @Override
@@ -51,8 +44,6 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
     
     protected abstract void draw(Graphics2D g);
 
-    protected abstract void update();
-    
     protected abstract void mousePressed(int x, int y);
     
     protected abstract void mouseReleased(int x, int y);
@@ -97,7 +88,6 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
         @Override
         public void run() {
             while (keepRunning) {
-                update();
                 try {
                     Thread.sleep(25);
                 } catch (InterruptedException ex) {}
