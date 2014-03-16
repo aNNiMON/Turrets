@@ -28,6 +28,7 @@ public class Turret implements Constants {
     private boolean shootState;
     private final ShootInfo shootInfo;
     private final Terrain terrain; // TODO GameInfo
+    private TurretListener listener;
     
     public Turret(boolean server, int turretY, Terrain terrain) {
         this.server = server;
@@ -53,9 +54,11 @@ public class Turret implements Constants {
             shootInfo.draw(g);
             if (shootInfo.isOver()) {
                 shootState = false;
+                if (listener != null) listener.shootComplete(-1);
             } else if (shootInfo.isCollideTerrain(terrain)) {
                 shootState = false;
                 terrain.destroyTerrain((int) shootInfo.x);
+                if (listener != null) listener.shootComplete((int) shootInfo.x);
             }
         }
         if (DEBUG_MODE) {
@@ -96,9 +99,26 @@ public class Turret implements Constants {
         }
     }
     
-    public void shoot() {
+    public TurretInfo getTurretInfo() {
+        TurretInfo t = new TurretInfo();
+        t.barrelAngle = this.barrelAngle;
+        t.shotPower = this.shotPower;
+        t.barrelX = this.barrelX;
+        t.barrelY = this.barrelY;
+        return t;
+    }
+    
+    public void setTurretInfo(TurretInfo t) {
+        this.barrelAngle = t.barrelAngle;
+        this.shotPower = t.shotPower;
+        this.barrelX = t.barrelX;
+        this.barrelY = t.barrelY;
+    }
+    
+    public void shoot(TurretListener listener) {
         if (shootState) return;
         
+        this.listener = listener;
         shootState = true;
         shootInfo.reset();
         shootInfo.x = barrelX;
@@ -113,5 +133,9 @@ public class Turret implements Constants {
         final int sign = (server ? 1 : -1);
         barrelX = (int) (turretX + sign * barrelRadius * shotPower * Math.cos(barrelAngle));
         barrelY = (int) (turretY + barrelRadius * shotPower * Math.sin(barrelAngle));
+    }
+    
+    public interface TurretListener {
+        void shootComplete(int x);
     }
 }
