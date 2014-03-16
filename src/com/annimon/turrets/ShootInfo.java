@@ -34,10 +34,21 @@ public class ShootInfo implements Constants {
     public boolean isOver() {
          return (x < 0) || (x >= Constants.WIDTH) || (y < 0);
     }
+    
+    public boolean isCollideOpponent(boolean server, Terrain tr) {
+        boolean serverXCheck = server && (x >= WIDTH - PLAYERS_BLOCK_COUNT - 1);
+        boolean clientXCheck = !server && (x <= PLAYERS_BLOCK_COUNT);
+        if (serverXCheck || clientXCheck) {
+            final int opponentY = server ? tr.getLastBlockHeight() : tr.getFirstBlockHeight();
+            return (Math.abs(y - opponentY) <= 4);
+        }
+        return false;
+    }
 
     public boolean isCollideTerrain(Terrain terrain) {
         return terrain.isCollide((int) x, (int) y);
     }
+    
     private double getDeltaX() {
         return speedX + Math.sin(t) * windSpeed;
     }
