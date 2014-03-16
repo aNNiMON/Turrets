@@ -47,6 +47,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     
     @Override
     public void onStatusChanged(int status, Object data) {
+        System.out.println("move: " + serverMove);
         if (serverInstance) serverNetworkStatus(status, data);
         else clientNetworkStatus(status, data);
     }
@@ -142,8 +143,8 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         else {
             if (serverInstance) {
                 long seed = System.currentTimeMillis();
-                socketHelper.sendNewRoundSeed(seed);
                 newRound(seed);
+                socketHelper.sendNewRoundSeed(seed);
             }
         }
     }
@@ -179,7 +180,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
 
         @Override
         public void shootComplete(boolean hitOpponent) {
-            serverMove = !serverMove;
+            serverMove = false;
             if (hitOpponent) {
                 finishRound(serverInstance);
             }
@@ -190,7 +191,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
 
         @Override
         public void shootComplete(boolean hitOpponent) {
-            serverMove = !serverMove;
+            serverMove = true;
             if (hitOpponent) {
                 finishRound(!serverInstance);
             }
