@@ -15,6 +15,7 @@ public interface Constants {
     
     // Parameters
     public static final boolean DEBUG_MODE = true;
+    public static final int PORT = 7117;
     
     // Game
     public static final double GRAVITATION_ACCELERATION = 9.81;
