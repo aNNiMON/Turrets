@@ -43,6 +43,10 @@ public class Turret implements Constants {
         calculateBarrelPosition();
     }
     
+    public void setTurretListener(TurretListener listener) {
+        this.listener = listener;
+    }
+    
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
         g.drawLine(turretX, Constants.HEIGHT - turretY, barrelX, Constants.HEIGHT - barrelY);
@@ -115,10 +119,9 @@ public class Turret implements Constants {
         this.barrelY = t.barrelY;
     }
     
-    public void shoot(TurretListener listener) {
+    public void shoot() {
         if (shootState) return;
         
-        this.listener = listener;
         shootState = true;
         shootInfo.reset();
         shootInfo.x = barrelX;

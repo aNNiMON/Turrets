@@ -58,7 +58,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
                 break;
             case ON_MOVE_RECEIVED:
                 clientTurret.setTurretInfo((TurretInfo) data);
-                clientTurret.shoot(clientTurretListener);
+                clientTurret.shoot();
                 break;
         }
     }
@@ -70,7 +70,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
                 break;
             case ON_MOVE_RECEIVED:
                 serverTurret.setTurretInfo((TurretInfo) data);
-                serverTurret.shoot(serverTurretListener);
+                serverTurret.shoot();
                 break;
         }
     }
@@ -105,7 +105,9 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         terrain.generate(seed);
         
         serverTurret = new Turret(Turret.SERVER, terrain.getFirstBlockHeight(), terrain);
+        serverTurret.setTurretListener(serverTurretListener);
         clientTurret = new Turret(Turret.CLIENT, terrain.getLastBlockHeight(), terrain);
+        clientTurret.setTurretListener(clientTurretListener);
         
         gameStarted = true;
         serverMove = true;
@@ -127,10 +129,10 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         if (!allowMove()) return;
         if (serverInstance) {
             socketHelper.sendMove(serverTurret.getTurretInfo());
-            serverTurret.shoot(serverTurretListener);
+            serverTurret.shoot();
         } else {
             socketHelper.sendMove(clientTurret.getTurretInfo());
-            clientTurret.shoot(clientTurretListener);
+            clientTurret.shoot();
         }
     }
 
@@ -141,7 +143,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         else clientTurret.setBarrelParams(x, Constants.HEIGHT - y);
     }
     
-    private Turret.TurretListener serverTurretListener = new Turret.TurretListener() {
+    private final Turret.TurretListener serverTurretListener = new Turret.TurretListener() {
 
         @Override
         public void shootComplete(int x) {
@@ -149,7 +151,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         }
     };
     
-    private Turret.TurretListener clientTurretListener = new Turret.TurretListener() {
+    private final Turret.TurretListener clientTurretListener = new Turret.TurretListener() {
 
         @Override
         public void shootComplete(int x) {
