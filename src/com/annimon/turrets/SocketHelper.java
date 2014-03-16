@@ -34,6 +34,9 @@ public class SocketHelper extends Thread {
                     case NetworkListener.ON_SEED_RECEIVED:
                         listener.onStatusChanged(status, receiveSeed());
                         break;
+                    case NetworkListener.ON_MOVE_RECEIVED:
+                        listener.onStatusChanged(status, receiveMove());
+                        break;
                 }
                 
             } catch (IOException ex) { }
@@ -52,6 +55,25 @@ public class SocketHelper extends Thread {
     
     private long receiveSeed() throws IOException {
         return dis.readLong();
+    }
+    
+    public void sendMove(TurretInfo info) {
+        try {
+            dos.writeInt(NetworkListener.ON_MOVE_RECEIVED);
+            dos.writeDouble(info.barrelAngle);
+            dos.writeDouble(info.shotPower);
+            dos.writeInt(info.barrelX);
+            dos.writeInt(info.barrelY);
+        } catch (IOException ex) { }
+    }
+    
+    private TurretInfo receiveMove() throws IOException {
+        TurretInfo t = new TurretInfo();
+        t.barrelAngle = dis.readDouble();
+        t.shotPower = dis.readDouble();
+        t.barrelX = dis.readInt();
+        t.barrelY = dis.readInt();
+        return t;
     }
     
     public void close() throws IOException {
