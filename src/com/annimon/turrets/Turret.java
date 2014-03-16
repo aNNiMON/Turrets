@@ -17,7 +17,8 @@ public class Turret implements Constants {
     private static final int TURRET_HEIGHT = PLAYERS_BLOCK_COUNT + 1;
 
     // Parameters
-    private final int turretX, turretY;
+    private final int turretX;
+    private int turretY;
     private final int barrelRadius;
     private final boolean server;
     private int barrelX, barrelY;
@@ -30,16 +31,22 @@ public class Turret implements Constants {
     private final Terrain terrain; // TODO GameInfo
     private TurretListener listener;
     
-    public Turret(boolean server, int turretY, Terrain terrain) {
+    public Turret(boolean server, Terrain terrain) {
         this.server = server;
         this.turretX = (server ? 5 : Constants.WIDTH - 5);
-        this.turretY = turretY;
         this.terrain = terrain;
+        barrelRadius = Constants.WIDTH / 20;
+        shootInfo = new ShootInfo();
+        reinit();
+    }
+    
+    public final void reinit() {
         barrelAngle = ANGLE_45;
         shotPower = 0.5d;
-        barrelRadius = Constants.WIDTH / 20;
         shootState = false;
-        shootInfo = new ShootInfo();
+        if (server) turretY = terrain.getFirstBlockHeight();
+        else turretY = terrain.getLastBlockHeight();
+        shootInfo.reset();
         calculateBarrelPosition();
     }
     
@@ -58,11 +65,14 @@ public class Turret implements Constants {
             shootInfo.draw(g);
             if (shootInfo.isOver()) {
                 shootState = false;
-                if (listener != null) listener.shootComplete(-1);
+                if (listener != null) listener.shootComplete(false);
+            } else if (shootInfo.isCollideOpponent(server, terrain)) {
+                shootState = false;
+                if (listener != null) listener.shootComplete(true);
             } else if (shootInfo.isCollideTerrain(terrain)) {
                 shootState = false;
                 terrain.destroyTerrain((int) shootInfo.x);
-                if (listener != null) listener.shootComplete((int) shootInfo.x);
+                if (listener != null) listener.shootComplete(false);
             }
         }
         if (DEBUG_MODE) {
@@ -139,6 +149,6 @@ public class Turret implements Constants {
     }
     
     public interface TurretListener {
-        void shootComplete(int x);
+        void shootComplete(boolean hitOpponent);
     }
 }

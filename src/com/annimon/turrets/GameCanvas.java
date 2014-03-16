@@ -74,6 +74,9 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
                 serverTurret.setTurretInfo((TurretInfo) data);
                 serverTurret.shoot();
                 break;
+            case ON_NEW_ROUND:
+                newRound((long) data);
+                break;
         }
     }
     
@@ -103,16 +106,12 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     }
     
     private void startGame(long seed) {
-        Util.setRandomSeed(seed);
-        // Reinit background with same seed on server and client.
-        initBackground();
-        
         terrain = new Terrain(Constants.WIDTH);
-        terrain.generate();
+        newRound(seed);
         
-        serverTurret = new Turret(Turret.SERVER, terrain.getFirstBlockHeight(), terrain);
+        serverTurret = new Turret(Turret.SERVER, terrain);
         serverTurret.setTurretListener(serverTurretListener);
-        clientTurret = new Turret(Turret.CLIENT, terrain.getLastBlockHeight(), terrain);
+        clientTurret = new Turret(Turret.CLIENT, terrain);
         clientTurret.setTurretListener(clientTurretListener);
         
         instanceTurret = (serverInstance) ? serverTurret : clientTurret;
@@ -122,12 +121,31 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         roundWinCount = 0;
     }
     
+    private void newRound(long seed) {
+        Util.setRandomSeed(seed);
+        // Reinit background with same seed on server and client.
+        initBackground();
+        terrain.generate();
+        
+        if (gameStarted) {
+            serverTurret.reinit();
+            clientTurret.reinit();
+        }
+    }
+    
     private void finishRound(boolean serverWinRound) {
         if (serverInstance && serverWinRound) roundWinCount++;
         else if (!serverInstance && !serverWinRound) roundWinCount--;
         
         if (roundWinCount == Constants.MAX_ROUNDS) finishGame(true);
         else if (roundWinCount == -Constants.MAX_ROUNDS) finishGame(false);
+        else {
+            if (serverInstance) {
+                long seed = System.currentTimeMillis();
+                socketHelper.sendNewRoundSeed(seed);
+                newRound(seed);
+            }
+        }
     }
     
     private void finishGame(boolean instanceWin) {
@@ -160,11 +178,9 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private final Turret.TurretListener serverTurretListener = new Turret.TurretListener() {
 
         @Override
-        public void shootComplete(int x) {
+        public void shootComplete(boolean hitOpponent) {
             serverMove = !serverMove;
-            if (x == -1) return;
-            final int bound = Constants.WIDTH - Constants.PLAYERS_BLOCK_COUNT;
-            if (x > bound) {
+            if (hitOpponent) {
                 finishRound(serverInstance);
             }
         }
@@ -173,10 +189,9 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private final Turret.TurretListener clientTurretListener = new Turret.TurretListener() {
 
         @Override
-        public void shootComplete(int x) {
+        public void shootComplete(boolean hitOpponent) {
             serverMove = !serverMove;
-            if (x == -1) return;
-            if (x < Constants.PLAYERS_BLOCK_COUNT) {
+            if (hitOpponent) {
                 finishRound(!serverInstance);
             }
         }
