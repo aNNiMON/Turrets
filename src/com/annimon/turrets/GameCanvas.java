@@ -19,7 +19,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private final boolean serverInstance;
     private SocketHelper socketHelper;
     
-    private boolean gameStarted;
+    private boolean gameStarted, serverMove;
     
     public GameCanvas(boolean serverInstance) {
         this.serverInstance = serverInstance;
@@ -56,6 +56,10 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
                 socketHelper.sendSeed(seed);
                 startGame(seed);
                 break;
+            case ON_MOVE_RECEIVED:
+                clientTurret.setTurretInfo((TurretInfo) data);
+                clientTurret.shoot(clientTurretListener);
+                break;
         }
     }
 
@@ -63,6 +67,10 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         switch (status) {
             case ON_SEED_RECEIVED:
                 startGame((long) data);
+                break;
+            case ON_MOVE_RECEIVED:
+                serverTurret.setTurretInfo((TurretInfo) data);
+                serverTurret.shoot(serverTurretListener);
                 break;
         }
     }
@@ -100,23 +108,52 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         clientTurret = new Turret(Turret.CLIENT, terrain.getLastBlockHeight(), terrain);
         
         gameStarted = true;
+        serverMove = true;
+    }
+    
+    private boolean allowMove() {
+        return (gameStarted && !(serverInstance ^ serverMove));
     }
 
     @Override
     protected void mousePressed(int x, int y) {
-        if (!gameStarted) return;
-        clientTurret.setBarrelParams(x, Constants.HEIGHT - y);
+        if (!allowMove()) return;
+        if (serverInstance) serverTurret.setBarrelParams(x, Constants.HEIGHT - y);
+        else clientTurret.setBarrelParams(x, Constants.HEIGHT - y);
     }
 
     @Override
     protected void mouseReleased(int x, int y) {
-        if (!gameStarted) return;
-        clientTurret.shoot();
+        if (!allowMove()) return;
+        if (serverInstance) {
+            socketHelper.sendMove(serverTurret.getTurretInfo());
+            serverTurret.shoot(serverTurretListener);
+        } else {
+            socketHelper.sendMove(clientTurret.getTurretInfo());
+            clientTurret.shoot(clientTurretListener);
+        }
     }
 
     @Override
     protected void mouseDragged(int x, int y) {
-        if (!gameStarted) return;
-        clientTurret.setBarrelParams(x, Constants.HEIGHT - y);
+        if (!allowMove()) return;
+        if (serverInstance) serverTurret.setBarrelParams(x, Constants.HEIGHT - y);
+        else clientTurret.setBarrelParams(x, Constants.HEIGHT - y);
     }
+    
+    private Turret.TurretListener serverTurretListener = new Turret.TurretListener() {
+
+        @Override
+        public void shootComplete(int x) {
+            serverMove = !serverMove;
+        }
+    };
+    
+    private Turret.TurretListener clientTurretListener = new Turret.TurretListener() {
+
+        @Override
+        public void shootComplete(int x) {
+            serverMove = !serverMove;
+        }
+    };
 }
