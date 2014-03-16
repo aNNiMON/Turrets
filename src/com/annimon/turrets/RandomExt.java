@@ -21,7 +21,7 @@ public class RandomExt extends Random {
     }
     
     public int rand(int from, int to) {
-	return nextInt(to - from) + from;
+	return nextInt(to - from + 1) + from;
     }
     
     public double rand(double from, double to) {
