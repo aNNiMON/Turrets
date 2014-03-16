@@ -11,8 +11,8 @@ public class GameClient implements Constants {
 
     private final SocketHelper helper;
 
-    public GameClient(String host) throws IOException {
-        helper = new SocketHelper(new Socket(host, PORT));
+    public GameClient(String host, NetworkListener listener) throws IOException {
+        helper = new SocketHelper(new Socket(host, PORT), listener);
     }
 
     public SocketHelper getHelper() {
