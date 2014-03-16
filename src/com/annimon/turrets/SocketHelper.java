@@ -32,6 +32,7 @@ public class SocketHelper extends Thread {
                 final int status = dis.readInt();
                 switch (status) {
                     case NetworkListener.ON_SEED_RECEIVED:
+                    case NetworkListener.ON_NEW_ROUND:
                         listener.onStatusChanged(status, receiveSeed());
                         break;
                     case NetworkListener.ON_MOVE_RECEIVED:
@@ -74,6 +75,13 @@ public class SocketHelper extends Thread {
         t.barrelX = dis.readInt();
         t.barrelY = dis.readInt();
         return t;
+    }
+    
+    public void sendNewRoundSeed(long seed) {
+        try {
+            dos.writeInt(NetworkListener.ON_NEW_ROUND);
+            dos.writeLong(seed);
+        } catch (IOException ex) {}
     }
     
     public void close() throws IOException {
