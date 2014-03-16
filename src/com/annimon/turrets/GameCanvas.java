@@ -20,6 +20,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private final boolean serverInstance;
     private SocketHelper socketHelper;
     
+    private int roundWinCount;
     private boolean gameStarted, serverMove;
     
     public GameCanvas(boolean serverInstance) {
@@ -118,6 +119,19 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         
         gameStarted = true;
         serverMove = true;
+        roundWinCount = 0;
+    }
+    
+    private void finishRound(boolean serverWinRound) {
+        if (serverInstance && serverWinRound) roundWinCount++;
+        else if (!serverInstance && !serverWinRound) roundWinCount--;
+        
+        if (roundWinCount == Constants.MAX_ROUNDS) finishGame(true);
+        else if (roundWinCount == -Constants.MAX_ROUNDS) finishGame(false);
+    }
+    
+    private void finishGame(boolean instanceWin) {
+        System.out.println(instanceWin ? "You win" : "Opponent win");
     }
     
     private boolean allowMove() {
@@ -148,6 +162,11 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         @Override
         public void shootComplete(int x) {
             serverMove = !serverMove;
+            if (x == -1) return;
+            final int bound = Constants.WIDTH - Constants.PLAYERS_BLOCK_COUNT;
+            if (x > bound) {
+                finishRound(serverInstance);
+            }
         }
     };
     
@@ -156,6 +175,10 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         @Override
         public void shootComplete(int x) {
             serverMove = !serverMove;
+            if (x == -1) return;
+            if (x < Constants.PLAYERS_BLOCK_COUNT) {
+                finishRound(!serverInstance);
+            }
         }
     };
 }

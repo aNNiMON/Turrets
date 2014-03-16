@@ -20,4 +20,5 @@ public interface Constants {
     // Game
     public static final double GRAVITATION_ACCELERATION = 9.81;
     public static final int PLAYERS_BLOCK_COUNT = 24;
+    public static final int MAX_ROUNDS = 5;
 }
