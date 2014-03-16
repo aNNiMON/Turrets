@@ -15,6 +15,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private final BufferedImage background;
     private Terrain terrain;
     private Turret serverTurret, clientTurret;
+    private Turret instanceTurret;
     
     private final boolean serverInstance;
     private SocketHelper socketHelper;
@@ -109,6 +110,8 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         clientTurret = new Turret(Turret.CLIENT, terrain.getLastBlockHeight(), terrain);
         clientTurret.setTurretListener(clientTurretListener);
         
+        instanceTurret = (serverInstance) ? serverTurret : clientTurret;
+        
         gameStarted = true;
         serverMove = true;
     }
@@ -120,27 +123,20 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     @Override
     protected void mousePressed(int x, int y) {
         if (!allowMove()) return;
-        if (serverInstance) serverTurret.setBarrelParams(x, Constants.HEIGHT - y);
-        else clientTurret.setBarrelParams(x, Constants.HEIGHT - y);
+        instanceTurret.setBarrelParams(x, Constants.HEIGHT - y);
     }
 
     @Override
     protected void mouseReleased(int x, int y) {
         if (!allowMove()) return;
-        if (serverInstance) {
-            socketHelper.sendMove(serverTurret.getTurretInfo());
-            serverTurret.shoot();
-        } else {
-            socketHelper.sendMove(clientTurret.getTurretInfo());
-            clientTurret.shoot();
-        }
+        socketHelper.sendMove(instanceTurret.getTurretInfo());
+        instanceTurret.shoot();
     }
 
     @Override
     protected void mouseDragged(int x, int y) {
         if (!allowMove()) return;
-        if (serverInstance) serverTurret.setBarrelParams(x, Constants.HEIGHT - y);
-        else clientTurret.setBarrelParams(x, Constants.HEIGHT - y);
+        instanceTurret.setBarrelParams(x, Constants.HEIGHT - y);
     }
     
     private final Turret.TurretListener serverTurretListener = new Turret.TurretListener() {
