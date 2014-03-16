@@ -45,15 +45,24 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     
     @Override
     public void onStatusChanged(int status, Object data) {
+        if (serverInstance) serverNetworkStatus(status, data);
+        else clientNetworkStatus(status, data);
+    }
+    
+    private void serverNetworkStatus(int status, Object data) {
         switch (status) {
             case ON_CONNECT:
-                gameStarted = true;
-                
-                terrain = new Terrain(Constants.WIDTH);
-                terrain.generate(System.currentTimeMillis());
+                long seed = System.currentTimeMillis();
+                socketHelper.sendSeed(seed);
+                startGame(seed);
+                break;
+        }
+    }
 
-                serverTurret = new Turret(Turret.SERVER, terrain.getFirstBlockHeight(), terrain);
-                clientTurret = new Turret(Turret.CLIENT, terrain.getLastBlockHeight(), terrain);
+    private void clientNetworkStatus(int status, Object data) {
+        switch (status) {
+            case ON_SEED_RECEIVED:
+                startGame((long) data);
                 break;
         }
     }
@@ -81,6 +90,16 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         final Graphics g = background.createGraphics();
         new Background().draw(g);
         g.dispose();
+    }
+    
+    private void startGame(long seed) {
+        terrain = new Terrain(Constants.WIDTH);
+        terrain.generate(seed);
+        
+        serverTurret = new Turret(Turret.SERVER, terrain.getFirstBlockHeight(), terrain);
+        clientTurret = new Turret(Turret.CLIENT, terrain.getLastBlockHeight(), terrain);
+        
+        gameStarted = true;
     }
 
     @Override

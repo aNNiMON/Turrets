@@ -27,6 +27,31 @@ public class SocketHelper extends Thread {
     @Override
     public void run() {
         listener.onStatusChanged(NetworkListener.ON_CONNECT, null);
+        while (true) {
+            try {
+                final int status = dis.readInt();
+                switch (status) {
+                    case NetworkListener.ON_SEED_RECEIVED:
+                        listener.onStatusChanged(status, receiveSeed());
+                        break;
+                }
+                
+            } catch (IOException ex) { }
+            try {
+                Thread.sleep(200);
+            } catch (InterruptedException ex) { }
+        }
+    }
+    
+    public void sendSeed(long seed) {
+        try {
+            dos.writeInt(NetworkListener.ON_SEED_RECEIVED);
+            dos.writeLong(seed);
+        } catch (IOException ex) {}
+    }
+    
+    private long receiveSeed() throws IOException {
+        return dis.readLong();
     }
     
     public void close() throws IOException {
