@@ -1,5 +1,7 @@
-package com.annimon.turrets;
+package com.annimon.turrets.network;
 
+import com.annimon.turrets.Constants;
+import com.annimon.turrets.SocketHelper;
 import com.annimon.turrets.network.NetworkListener;
 import java.io.IOException;
 import java.net.Socket;
