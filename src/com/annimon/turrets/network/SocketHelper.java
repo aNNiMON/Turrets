@@ -1,7 +1,6 @@
 package com.annimon.turrets.network;
 
 import com.annimon.turrets.TurretInfo;
-import com.annimon.turrets.network.NetworkListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
