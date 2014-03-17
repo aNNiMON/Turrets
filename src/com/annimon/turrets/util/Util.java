@@ -1,7 +1,5 @@
 package com.annimon.turrets.util;
 
-import com.annimon.turrets.RandomExt;
-
 /**
  *
  * @author aNNiMON
