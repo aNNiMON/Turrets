@@ -151,4 +151,9 @@ public class Turret implements Constants {
     public interface TurretListener {
         void shootComplete(boolean hitOpponent);
     }
+    
+    public static class TurretInfo {
+        public double barrelAngle, shotPower;
+        public int barrelX, barrelY;
+    }
 }

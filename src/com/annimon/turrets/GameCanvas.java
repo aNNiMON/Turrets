@@ -1,9 +1,10 @@
 package com.annimon.turrets;
 
-import com.annimon.turrets.network.SocketHelper;
-import com.annimon.turrets.network.GameServer;
+import com.annimon.turrets.Turret.TurretInfo;
 import com.annimon.turrets.network.GameClient;
+import com.annimon.turrets.network.GameServer;
 import com.annimon.turrets.network.NetworkListener;
+import com.annimon.turrets.network.SocketHelper;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
 import java.awt.Graphics;
