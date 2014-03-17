@@ -1,5 +1,7 @@
-package com.annimon.turrets;
+package com.annimon.turrets.util;
 
+import com.annimon.turrets.Background;
+import com.annimon.turrets.Constants;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.GradientPaint;

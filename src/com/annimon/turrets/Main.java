@@ -1,5 +1,6 @@
 package com.annimon.turrets;
 
+import com.annimon.turrets.util.GuiUtil;
 import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JLayer;
