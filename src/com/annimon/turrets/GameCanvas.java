@@ -7,18 +7,24 @@ import com.annimon.turrets.network.NetworkListener;
 import com.annimon.turrets.network.SocketHelper;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import javax.swing.UIManager;
 
 /**
  *
  * @author aNNiMON
  */
 public class GameCanvas extends DoubleBufferedCanvas implements Runnable, NetworkListener {
+    
+    private static final String WAIT_MESSAGE = "Please, wait...";
 
     private final BufferedImage background;
+    private final Font font;
     private Terrain terrain;
     private Turret serverTurret, clientTurret;
     private Turret instanceTurret;
@@ -34,20 +40,24 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         
         background = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
         initBackground();
+        font = new Font("Times New Roman", Font.PLAIN, 24);
         
         gameStarted = false;
     }
     
     @Override
     protected void draw(Graphics2D g) {
+        final FontMetrics metrics = g.getFontMetrics(font);
         g.drawImage(background, 0, 0, null);
+        g.setFont(font);
         if (gameStarted) {
             terrain.draw(g);
             serverTurret.draw(g);
             clientTurret.draw(g);
         } else {
             g.setColor(Color.WHITE);
-            g.drawString("Please, wait...", Constants.WIDTH - 100, Constants.HEIGHT - 20);
+            final int x = (Constants.WIDTH - metrics.stringWidth(WAIT_MESSAGE)) / 2;
+            g.drawString(WAIT_MESSAGE, x, Constants.HEIGHT - metrics.getHeight() * 2);
         }
     }
     
