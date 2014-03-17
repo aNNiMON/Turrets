@@ -28,7 +28,7 @@ public class Main extends JFrame {
         setLocationByPlatform(true);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
-        add(new JLayer<>(new MenuPanel(), new LayerUI.PlanetBackground()));
+        add(new JLayer<>(new MenuPanel(), new GuiUtil.PlanetBackground()));
         pack();
     }
     

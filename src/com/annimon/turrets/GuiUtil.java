@@ -12,7 +12,7 @@ import javax.swing.JComponent;
  *
  * @author aNNiMON
  */
-public class LayerUI {
+public class GuiUtil {
 
     public static class GradientBackground extends javax.swing.plaf.LayerUI<JComponent> {
 
