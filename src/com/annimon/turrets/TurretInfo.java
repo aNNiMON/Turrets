@@ -6,6 +6,6 @@ package com.annimon.turrets;
  */
 public class TurretInfo {
 
-    double barrelAngle, shotPower;
-    int barrelX, barrelY;
+    public double barrelAngle, shotPower;
+    public int barrelX, barrelY;
 }
