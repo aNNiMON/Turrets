@@ -1,4 +1,4 @@
-package com.annimon.turrets;
+package com.annimon.turrets.network;
 
 /**
  *
