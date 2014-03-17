@@ -1,5 +1,6 @@
 package com.annimon.turrets;
 
+import com.annimon.turrets.network.GameServer;
 import com.annimon.turrets.network.GameClient;
 import com.annimon.turrets.network.NetworkListener;
 import com.annimon.turrets.util.Util;
