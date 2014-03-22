@@ -177,6 +177,17 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     
     private void finishGame(boolean instanceWin) {
         winState = (instanceWin) ? WIN : LOOSE;
+        gameStarted = false;
+    }
+    
+    @Override
+    protected void onExit() {
+        if (socketHelper != null) {
+            try {
+                socketHelper.close();
+            } catch (IOException ex) { }
+        }
+        Main.getInstance().switchLayout(Main.getInstance().getMainMenu());
     }
     
     private boolean allowMove() {

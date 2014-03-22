@@ -71,6 +71,7 @@ public class MenuPanel extends JPanel {
             switch (index) {
                 case 0: // Create server
                 case 1: // Join client
+                    menuList.removeSelectionInterval(0, 1);
                     GameCanvas canvas = new GameCanvas(index == 0);
                     Main.getInstance().switchLayout(canvas);
                     new Thread(canvas).start();

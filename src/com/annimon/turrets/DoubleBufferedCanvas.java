@@ -3,6 +3,8 @@ package com.annimon.turrets;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -12,7 +14,7 @@ import java.awt.image.BufferedImage;
  *
  * @author aNNiMON
  */
-public abstract class DoubleBufferedCanvas extends Canvas implements MouseListener, MouseMotionListener {
+public abstract class DoubleBufferedCanvas extends Canvas implements MouseListener, MouseMotionListener, KeyListener {
     
     private final Graphics2D G;
     private final BufferedImage buffer;
@@ -24,6 +26,7 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
         
         addMouseListener(DoubleBufferedCanvas.this);
         addMouseMotionListener(DoubleBufferedCanvas.this);
+        addKeyListener(DoubleBufferedCanvas.this);
         
         buffer = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
         G = buffer.createGraphics();
@@ -49,6 +52,8 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
     protected abstract void mouseReleased(int x, int y);
     
     protected abstract void mouseDragged(int x, int y);
+    
+    protected abstract void onExit();
     
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -79,6 +84,21 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
 
     @Override
     public void mouseMoved(MouseEvent e) {
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+            onExit();
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
     
     private final class DrawingThread extends Thread {
