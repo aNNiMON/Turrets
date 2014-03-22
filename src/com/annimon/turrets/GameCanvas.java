@@ -21,6 +21,8 @@ import java.io.IOException;
 public class GameCanvas extends DoubleBufferedCanvas implements Runnable, NetworkListener {
     
     private static final String WAIT_MESSAGE = "Please, wait...";
+    private static final int WIN = 1, LOOSE = -1, NOTHING = 0;
+    private static final String WIN_MESSAGE = "YOU WIN", LOOSE_MESSAGE = "YOU LOOSE";
 
     private final BufferedImage background;
     private final Font font;
@@ -31,7 +33,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private final boolean serverInstance;
     private SocketHelper socketHelper;
     
-    private int roundWinCount;
+    private int roundWinCount, winState;
     private boolean gameStarted, serverMove;
     
     public GameCanvas(boolean serverInstance) {
@@ -49,7 +51,13 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         final FontMetrics metrics = g.getFontMetrics(font);
         g.drawImage(background, 0, 0, null);
         g.setFont(font);
-        if (gameStarted) {
+        if (winState != NOTHING) {
+            g.setColor(Color.WHITE);
+            final String text = (winState == WIN) ? WIN_MESSAGE : LOOSE_MESSAGE;
+            final int x = (Constants.WIDTH - metrics.stringWidth(text)) / 2;
+            final int y = (Constants.HEIGHT + metrics.getHeight()) / 2;
+            g.drawString(text, x, y);
+        } else if (gameStarted) {
             terrain.draw(g);
             serverTurret.draw(g);
             clientTurret.draw(g);
@@ -134,6 +142,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         gameStarted = true;
         serverMove = true;
         roundWinCount = 0;
+        winState = NOTHING;
     }
     
     private void newRound(long seed) {
@@ -167,7 +176,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     }
     
     private void finishGame(boolean instanceWin) {
-        System.out.println(instanceWin ? "You win" : "Opponent win");
+        winState = (instanceWin) ? WIN : LOOSE;
     }
     
     private boolean allowMove() {
