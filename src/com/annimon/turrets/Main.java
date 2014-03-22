@@ -4,7 +4,6 @@ import com.annimon.turrets.util.GuiUtil;
 import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JLayer;
-import javax.swing.WindowConstants;
 
 /**
  *
@@ -27,7 +26,6 @@ public class Main extends JFrame {
 
     public Main() {
         super("Turrets");
-        setFocusable(true);
         setResizable(Constants.RESIZABLE);
         setLocationByPlatform(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -44,6 +42,8 @@ public class Main extends JFrame {
     public void switchLayout(Component component) {
         getContentPane().removeAll();
         getContentPane().add(component);
+        component.setFocusable(true);
+        component.requestFocus();
         pack();
     }
 }
