@@ -156,6 +156,9 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         else if (roundWinCount == -Constants.MAX_ROUNDS) finishGame(false);
         else {
             if (serverInstance) {
+                try {
+                    Thread.sleep(200);
+                } catch (InterruptedException ex) { }
                 long seed = System.currentTimeMillis();
                 newRound(seed);
                 socketHelper.sendNewRoundSeed(seed);
