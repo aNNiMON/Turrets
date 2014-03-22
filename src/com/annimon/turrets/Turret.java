@@ -29,12 +29,14 @@ public class Turret implements Constants {
     private boolean shootState;
     private final ShootInfo shootInfo;
     private final Terrain terrain; // TODO GameInfo
+    private final Wind wind;
     private TurretListener listener;
     
-    public Turret(boolean server, Terrain terrain) {
+    public Turret(boolean server, Terrain terrain, Wind wind) {
         this.server = server;
         this.turretX = (server ? 5 : Constants.WIDTH - 5);
         this.terrain = terrain;
+        this.wind = wind;
         barrelRadius = Constants.WIDTH / 20;
         shootInfo = new ShootInfo();
         reinit();
@@ -80,7 +82,7 @@ public class Turret implements Constants {
             double x = barrelX;
             double y = barrelY;
             final double speed = shotPower * (Constants.WIDTH / 80d);
-            final double windSpeed = 0d;
+            final double windSpeed = wind.getSpeed();
             final double speedX = speed * Math.cos(barrelAngle);
             final double vsin = speed * Math.sin(barrelAngle);
             
@@ -90,7 +92,7 @@ public class Turret implements Constants {
                 final double speedY = vsin - GRAVITATION_ACCELERATION * t;
                 // The longer the missile flight, the greater the wind impact.
                 if (server) x += speedX + Math.sin(t) * windSpeed;
-                else x -= speedX + Math.sin(t) * windSpeed;
+                else x -= speedX + Math.sin(t) * -windSpeed;
                 y += speedY;
                 t += 0.01;
                 
@@ -137,7 +139,7 @@ public class Turret implements Constants {
         shootInfo.x = barrelX;
         shootInfo.y = barrelY;
         final double speed = shotPower * (Constants.WIDTH / 80d);
-        shootInfo.windSpeed = 0d;//Wind.getInstance().getSpeed();
+        shootInfo.windSpeed = wind.getSpeed() * (server ? 1 : -1);
         shootInfo.speedX = speed * Math.cos(barrelAngle);
         shootInfo.vsin = speed * Math.sin(barrelAngle);
     }

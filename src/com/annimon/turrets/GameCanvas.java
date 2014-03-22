@@ -29,6 +29,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private Terrain terrain;
     private Turret serverTurret, clientTurret;
     private Turret instanceTurret;
+    private final Wind wind;
     
     private final boolean serverInstance;
     private SocketHelper socketHelper;
@@ -43,6 +44,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         initBackground();
         font = new Font(Constants.FONT_NAME, Font.PLAIN, 24);
         
+        wind = new Wind();
         gameStarted = false;
     }
     
@@ -136,9 +138,9 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         terrain = new Terrain(Constants.WIDTH);
         newRound(seed);
         
-        serverTurret = new Turret(Turret.SERVER, terrain);
+        serverTurret = new Turret(Turret.SERVER, terrain, wind);
         serverTurret.setTurretListener(serverTurretListener);
-        clientTurret = new Turret(Turret.CLIENT, terrain);
+        clientTurret = new Turret(Turret.CLIENT, terrain, wind);
         clientTurret.setTurretListener(clientTurretListener);
         
         instanceTurret = (serverInstance) ? serverTurret : clientTurret;
@@ -154,6 +156,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         // Reinit background with same seed on server and client.
         initBackground();
         terrain.generate();
+        wind.change();
         
         if (gameStarted) {
             serverTurret.reinit();
