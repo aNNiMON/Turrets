@@ -13,7 +13,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import javax.swing.UIManager;
 
 /**
  *
@@ -40,7 +39,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         
         background = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
         initBackground();
-        font = new Font("Times New Roman", Font.PLAIN, 24);
+        font = new Font(Constants.FONT_NAME, Font.PLAIN, 24);
         
         gameStarted = false;
     }
@@ -63,7 +62,6 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     
     @Override
     public void onStatusChanged(int status, Object data) {
-        System.out.println("move: " + serverMove);
         if (serverInstance) serverNetworkStatus(status, data);
         else clientNetworkStatus(status, data);
     }
