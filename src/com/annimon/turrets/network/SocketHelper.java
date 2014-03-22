@@ -40,8 +40,9 @@ public class SocketHelper extends Thread {
                         listener.onStatusChanged(status, receiveMove());
                         break;
                 }
-                
-            } catch (IOException ex) { }
+            } catch (IOException ex) {
+                listener.onStatusChanged(NetworkListener.ON_DISCONNECT, null);
+            }
             try {
                 Thread.sleep(200);
             } catch (InterruptedException ex) { }

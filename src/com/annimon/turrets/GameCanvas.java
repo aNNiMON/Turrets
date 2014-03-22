@@ -70,6 +70,10 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     
     @Override
     public void onStatusChanged(int status, Object data) {
+        if (status == ON_DISCONNECT) {
+            onExit();
+            return;
+        }
         if (serverInstance) serverNetworkStatus(status, data);
         else clientNetworkStatus(status, data);
     }
