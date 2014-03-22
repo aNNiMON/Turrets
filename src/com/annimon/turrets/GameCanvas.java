@@ -63,6 +63,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
             terrain.draw(g);
             serverTurret.draw(g);
             clientTurret.draw(g);
+            wind.drawInfo(g, metrics);
         } else {
             g.setColor(Color.WHITE);
             final int x = (Constants.WIDTH - metrics.stringWidth(WAIT_MESSAGE)) / 2;
