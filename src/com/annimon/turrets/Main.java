@@ -22,15 +22,22 @@ public class Main extends JFrame {
         if (instance == null) instance = new Main();
         return instance;
     }
+    
+    private final Component mainMenu;
 
     public Main() {
         super("Turrets");
         setResizable(Constants.RESIZABLE);
         setLocationByPlatform(true);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        add(new JLayer<>(new MenuPanel(), new GuiUtil.PlanetBackground()));
+        mainMenu = new JLayer<>(new MenuPanel(), new GuiUtil.PlanetBackground());
+        add(mainMenu);
         pack();
+    }
+    
+    public Component getMainMenu() {
+        return mainMenu;
     }
     
     public void switchLayout(Component component) {

@@ -69,7 +69,7 @@ public class MenuPanel extends JPanel {
             
             final int index = menuList.getSelectedIndex();
             switch (index) {
-                case 0: // Create sever
+                case 0: // Create server
                 case 1: // Join client
                     GameCanvas canvas = new GameCanvas(index == 0);
                     Main.getInstance().switchLayout(canvas);
