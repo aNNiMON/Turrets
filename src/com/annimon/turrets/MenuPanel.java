@@ -67,6 +67,8 @@ public class MenuPanel extends JPanel {
         public void valueChanged(ListSelectionEvent event) {
             if (event.getValueIsAdjusting()) return;
             
+            Sound.CLICK.play();
+            
             final int index = menuList.getSelectedIndex();
             switch (index) {
                 case 0: // Create server
