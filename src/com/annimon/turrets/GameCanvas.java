@@ -52,6 +52,10 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         gameStarted = false;
     }
     
+    public void setServerAddress(String inetAddress) {
+        this.inetAddress = inetAddress;
+    }
+    
     @Override
     protected void draw(Graphics2D g) {
         final FontMetrics metrics = g.getFontMetrics(font);
@@ -130,7 +134,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
                 GameServer server = new GameServer(this);
                 socketHelper = server.getHelper();
             } else {
-                GameClient client = new GameClient("localhost", this);
+                GameClient client = new GameClient(inetAddress, this);
                 socketHelper = client.getHelper();
             }
             socketHelper.start();

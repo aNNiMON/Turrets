@@ -1,6 +1,7 @@
 package com.annimon.turrets;
 
 import static com.annimon.turrets.Constants.SCREEN_DIMENSION;
+import com.annimon.turrets.util.Prefs;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -76,6 +77,7 @@ public class MenuPanel extends JPanel {
                 case 1: // Join client
                     menuList.removeSelectionInterval(0, 1);
                     GameCanvas canvas = new GameCanvas(index == 0);
+                    canvas.setServerAddress(Prefs.getInstance().lastIp());
                     Main.getInstance().switchLayout(canvas);
                     new Thread(canvas).start();
                     break;
