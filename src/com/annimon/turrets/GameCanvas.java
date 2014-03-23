@@ -36,6 +36,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     
     private final boolean serverInstance;
     private SocketHelper socketHelper;
+    private String inetAddress;
     
     private boolean gameStarted, serverMove;
     private int serverWinCount, clientWinCount, winState;
@@ -69,8 +70,12 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
             wind.drawInfo(g, metrics);
         } else {
             g.setColor(Color.WHITE);
-            final int x = (Constants.WIDTH - metrics.stringWidth(WAIT_MESSAGE)) / 2;
-            g.drawString(WAIT_MESSAGE, x, Constants.HEIGHT - metrics.getHeight() * 2);
+            final String str;
+            if (serverInstance && (inetAddress != null)) {
+                str = WAIT_MESSAGE + " " + inetAddress;
+            } else str = WAIT_MESSAGE;
+            final int x = (Constants.WIDTH - metrics.stringWidth(str)) / 2;
+            g.drawString(str, x, Constants.HEIGHT - metrics.getHeight() * 2);
         }
     }
     
@@ -121,6 +126,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private void initNetwork() {
         try {
             if (serverInstance) {
+                inetAddress = GameServer.getInetAddress();
                 GameServer server = new GameServer(this);
                 socketHelper = server.getHelper();
             } else {

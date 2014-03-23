@@ -2,7 +2,9 @@ package com.annimon.turrets.network;
 
 import static com.annimon.turrets.Constants.PORT;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.UnknownHostException;
 
 /**
  *
@@ -20,5 +22,9 @@ public class GameServer {
     
     public SocketHelper getHelper() {
         return helper;
+    }
+    
+    public static String getInetAddress() throws UnknownHostException {
+        return InetAddress.getLocalHost().getHostAddress();
     }
 }
