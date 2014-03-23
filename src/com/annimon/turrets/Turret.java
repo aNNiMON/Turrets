@@ -70,9 +70,11 @@ public class Turret implements Constants {
                 if (listener != null) listener.shootComplete(false);
             } else if (shootInfo.isCollideOpponent(server, terrain)) {
                 shootState = false;
+                Sound.EXPLOSION_2.play();
                 if (listener != null) listener.shootComplete(true);
             } else if (shootInfo.isCollideTerrain(terrain)) {
                 shootState = false;
+                Sound.EXPLOSION_1.play();
                 terrain.destroyTerrain((int) shootInfo.x);
                 if (listener != null) listener.shootComplete(false);
             }
