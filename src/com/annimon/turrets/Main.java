@@ -2,6 +2,7 @@ package com.annimon.turrets;
 
 import static com.annimon.turrets.Constants.RESIZABLE;
 import com.annimon.turrets.util.GuiUtil;
+import com.annimon.turrets.util.Prefs;
 import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JLayer;
@@ -34,6 +35,9 @@ public class Main extends JFrame {
         mainMenu = new JLayer<>(new MenuPanel(), new GuiUtil.PlanetBackground());
         add(mainMenu);
         pack();
+        
+        // Set sound
+        Sound.setEnabled(Prefs.getInstance().soundEnabled());
     }
     
     public Component getMainMenu() {
