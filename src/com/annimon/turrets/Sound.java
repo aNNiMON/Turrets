@@ -18,15 +18,26 @@ public enum Sound {
     EXPLOSION_1("/res/explosion1.wav"),
     EXPLOSION_2("/res/explosion2.wav");
     
+    private static boolean enabled;
     private final Clip soundClip;
     
     Sound(String resource) {
         soundClip = loadClip(resource);
     }
     
+    public static boolean isEnabled() {
+        return enabled;
+    }
+
+    public static void setEnabled(boolean enabled) {
+        Sound.enabled = enabled;
+    }
+    
     public void play() {
-        soundClip.setFramePosition(0);
-        soundClip.start();
+        if (enabled) {
+            soundClip.setFramePosition(0);
+            soundClip.start();
+        }
     }
     
     private Clip loadClip(String resource) {
