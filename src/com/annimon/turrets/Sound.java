@@ -1,7 +1,7 @@
 package com.annimon.turrets;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -32,8 +32,8 @@ public class Sound {
     private Clip loadClip(String resource) {
         Clip clip = null;
         try {
-            final InputStream is = getClass().getResourceAsStream(resource);
-            try (AudioInputStream ais = AudioSystem.getAudioInputStream(is)) {
+            final URL url = getClass().getResource(resource);
+            try (AudioInputStream ais = AudioSystem.getAudioInputStream(url)) {
                 clip = AudioSystem.getClip();
                 clip.open(ais);
             }
