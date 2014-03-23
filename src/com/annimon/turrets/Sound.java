@@ -12,15 +12,14 @@ import javax.sound.sampled.UnsupportedAudioFileException;
  *
  * @author aNNiMON
  */
-public class Sound {
-    
-    public static final Sound CLICK = new Sound("/res/click.wav");
-    public static final Sound EXPLOSION_1 = new Sound("/res/explosion1.wav");
-    public static final Sound EXPLOSION_2 = new Sound("/res/explosion2.wav");
+public enum Sound {
+    CLICK("/res/click.wav"),
+    EXPLOSION_1("/res/explosion1.wav"),
+    EXPLOSION_2("/res/explosion2.wav");
     
     private final Clip soundClip;
     
-    public Sound(String resource) {
+    Sound(String resource) {
         soundClip = loadClip(resource);
     }
     
