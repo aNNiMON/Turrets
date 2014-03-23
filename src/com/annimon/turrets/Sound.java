@@ -1,5 +1,6 @@
 package com.annimon.turrets;
 
+import com.annimon.turrets.util.ExceptionHandler;
 import java.io.IOException;
 import java.net.URL;
 import javax.sound.sampled.AudioInputStream;
@@ -37,7 +38,7 @@ public enum Sound {
                 clip.open(ais);
             }
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
-            ex.printStackTrace();
+            ExceptionHandler.handle(ex);
         }
         return clip;
     }

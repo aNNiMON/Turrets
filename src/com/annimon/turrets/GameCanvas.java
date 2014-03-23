@@ -7,6 +7,7 @@ import com.annimon.turrets.network.GameClient;
 import com.annimon.turrets.network.GameServer;
 import com.annimon.turrets.network.NetworkListener;
 import com.annimon.turrets.network.SocketHelper;
+import com.annimon.turrets.util.ExceptionHandler;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
 import java.awt.Font;
@@ -128,6 +129,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
             }
             socketHelper.start();
         } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
         }
     }
     

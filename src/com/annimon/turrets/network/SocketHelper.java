@@ -1,6 +1,7 @@
 package com.annimon.turrets.network;
 
 import com.annimon.turrets.Turret.TurretInfo;
+import com.annimon.turrets.util.ExceptionHandler;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -41,6 +42,7 @@ public class SocketHelper extends Thread {
                         break;
                 }
             } catch (IOException ex) {
+                ExceptionHandler.handle(ex);
                 listener.onStatusChanged(NetworkListener.ON_DISCONNECT, null);
             }
             try {
@@ -53,7 +55,9 @@ public class SocketHelper extends Thread {
         try {
             dos.writeInt(NetworkListener.ON_SEED_RECEIVED);
             dos.writeLong(seed);
-        } catch (IOException ex) {}
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
+        }
     }
     
     private long receiveSeed() throws IOException {
@@ -67,7 +71,9 @@ public class SocketHelper extends Thread {
             dos.writeDouble(info.shotPower);
             dos.writeInt(info.barrelX);
             dos.writeInt(info.barrelY);
-        } catch (IOException ex) { }
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
+        }
     }
     
     private TurretInfo receiveMove() throws IOException {
@@ -83,7 +89,9 @@ public class SocketHelper extends Thread {
         try {
             dos.writeInt(NetworkListener.ON_NEW_ROUND);
             dos.writeLong(seed);
-        } catch (IOException ex) {}
+        } catch (IOException ex) {
+            ExceptionHandler.handle(ex);
+        }
     }
     
     public void close() throws IOException {
