@@ -72,12 +72,15 @@ public class MenuPanel extends JPanel {
             Sound.CLICK.play();
             
             final int index = menuList.getSelectedIndex();
+            menuList.removeSelectionInterval(index, index);
             switch (index) {
                 case 0: // Create server
                 case 1: // Join client
-                    menuList.removeSelectionInterval(0, 1);
-                    GameCanvas canvas = new GameCanvas(index == 0);
-                    canvas.setServerAddress(Prefs.getInstance().lastIp());
+                    final boolean server = (index == 0);
+                    GameCanvas canvas = new GameCanvas(server);
+                    if (!server) {
+                        canvas.setServerAddress(Prefs.getInstance().lastIp());
+                    }
                     Main.getInstance().switchLayout(canvas);
                     new Thread(canvas).start();
                     break;
