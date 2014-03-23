@@ -34,8 +34,8 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     private final boolean serverInstance;
     private SocketHelper socketHelper;
     
-    private int roundWinCount, winState;
     private boolean gameStarted, serverMove;
+    private int serverWinCount, clientWinCount, winState;
     
     public GameCanvas(boolean serverInstance) {
         this.serverInstance = serverInstance;
@@ -148,7 +148,8 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         
         gameStarted = true;
         serverMove = true;
-        roundWinCount = 0;
+        serverWinCount = 0;
+        clientWinCount = 0;
         winState = NOTHING;
     }
     
@@ -166,11 +167,27 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
     }
     
     private void finishRound(boolean serverWinRound) {
-        if (serverInstance && serverWinRound) roundWinCount++;
-        else if (!serverInstance && !serverWinRound) roundWinCount--;
+        if (serverWinRound) serverWinCount++;
+        else clientWinCount++;
         
-        if (roundWinCount == Constants.MAX_ROUNDS) finishGame(true);
-        else if (roundWinCount == -Constants.MAX_ROUNDS) finishGame(false);
+        final boolean serverWin = (serverWinCount == Constants.MAX_ROUNDS);
+        final boolean clientWin = (clientWinCount == Constants.MAX_ROUNDS);
+        if (serverWin || clientWin) {
+            // Show winners.
+            finishGame( (serverWin && serverInstance) || (clientWin && !serverInstance) );
+        } else if (serverInstance) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) { }
+            long seed = System.currentTimeMillis();
+            newRound(seed);
+            socketHelper.sendNewRoundSeed(seed);
+        }
+        
+        System.out.println(serverWinCount + " " + clientWinCount);
+        
+        if (serverWinCount == Constants.MAX_ROUNDS) finishGame(true);
+        else if (serverWinCount == -Constants.MAX_ROUNDS) finishGame(false);
         else {
             if (serverInstance) {
                 try {
