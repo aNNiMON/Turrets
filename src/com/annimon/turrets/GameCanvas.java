@@ -1,5 +1,7 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.FONT_NAME;
+import static com.annimon.turrets.Constants.MAX_ROUNDS;
 import com.annimon.turrets.Turret.TurretInfo;
 import com.annimon.turrets.network.GameClient;
 import com.annimon.turrets.network.GameServer;
@@ -42,7 +44,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         
         background = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
         initBackground();
-        font = new Font(Constants.FONT_NAME, Font.PLAIN, 24);
+        font = new Font(FONT_NAME, Font.PLAIN, 24);
         
         wind = new Wind();
         gameStarted = false;
@@ -170,8 +172,8 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
         if (serverWinRound) serverWinCount++;
         else clientWinCount++;
         
-        final boolean serverWin = (serverWinCount == Constants.MAX_ROUNDS);
-        final boolean clientWin = (clientWinCount == Constants.MAX_ROUNDS);
+        final boolean serverWin = (serverWinCount == MAX_ROUNDS);
+        final boolean clientWin = (clientWinCount == MAX_ROUNDS);
         if (serverWin || clientWin) {
             // Show winners.
             finishGame( (serverWin && serverInstance) || (clientWin && !serverInstance) );
@@ -182,21 +184,6 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
             long seed = System.currentTimeMillis();
             newRound(seed);
             socketHelper.sendNewRoundSeed(seed);
-        }
-        
-        System.out.println(serverWinCount + " " + clientWinCount);
-        
-        if (serverWinCount == Constants.MAX_ROUNDS) finishGame(true);
-        else if (serverWinCount == -Constants.MAX_ROUNDS) finishGame(false);
-        else {
-            if (serverInstance) {
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException ex) { }
-                long seed = System.currentTimeMillis();
-                newRound(seed);
-                socketHelper.sendNewRoundSeed(seed);
-            }
         }
     }
     

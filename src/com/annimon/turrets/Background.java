@@ -1,5 +1,7 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.HEIGHT;
+import static com.annimon.turrets.Constants.WIDTH;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -8,7 +10,7 @@ import java.awt.Graphics;
  *
  * @author aNNiMON
  */
-public class Background implements Constants {
+public class Background {
     
     private static final int STARS_COUNT = (int) Math.sqrt(WIDTH * HEIGHT);
     

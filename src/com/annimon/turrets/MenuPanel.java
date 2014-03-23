@@ -1,5 +1,6 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.SCREEN_DIMENSION;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -54,7 +55,7 @@ public class MenuPanel extends JPanel {
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         // Init panel
-        setPreferredSize(Constants.SCREEN_DIMENSION);
+        setPreferredSize(SCREEN_DIMENSION);
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
         add(menuList, BorderLayout.SOUTH);

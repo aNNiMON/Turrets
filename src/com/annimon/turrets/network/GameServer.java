@@ -1,6 +1,6 @@
 package com.annimon.turrets.network;
 
-import com.annimon.turrets.Constants;
+import static com.annimon.turrets.Constants.PORT;
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -8,7 +8,7 @@ import java.net.ServerSocket;
  *
  * @author aNNiMON
  */
-public class GameServer implements Constants {
+public class GameServer {
 
     private final ServerSocket serverSocket;
     private final SocketHelper helper;

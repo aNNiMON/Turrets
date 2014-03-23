@@ -1,16 +1,18 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.HEIGHT;
+import static com.annimon.turrets.Constants.PLAYERS_BLOCK_COUNT;
+import static com.annimon.turrets.Constants.WIDTH;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.LinearGradientPaint;
-import java.util.Random;
 
 /**
  * Destructible terrain.
  * @author aNNiMON
  */
-public class Terrain implements Constants {
+public class Terrain {
 
     private static final Color[] TERRAIN_COLOR = {
         new Color(0xFF33CE2B), new Color(0xFF1C7317)
@@ -94,8 +96,8 @@ public class Terrain implements Constants {
         }
         
         gradientPaint = new LinearGradientPaint(
-                0, Constants.HEIGHT - maxBlockHeight,
-                0, Constants.HEIGHT,
+                0, HEIGHT - maxBlockHeight,
+                0, HEIGHT,
                 new float[] {0f, 1f}, TERRAIN_COLOR);
     }
 }

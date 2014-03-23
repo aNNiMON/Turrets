@@ -1,5 +1,10 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.DEBUG_MODE;
+import static com.annimon.turrets.Constants.GRAVITATION_ACCELERATION;
+import static com.annimon.turrets.Constants.HEIGHT;
+import static com.annimon.turrets.Constants.PLAYERS_BLOCK_COUNT;
+import static com.annimon.turrets.Constants.WIDTH;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -7,7 +12,7 @@ import java.awt.Graphics2D;
  *
  * @author aNNiMON
  */
-public class Turret implements Constants {
+public class Turret {
     
     public static final boolean SERVER = true, CLIENT = false;
     
@@ -34,10 +39,10 @@ public class Turret implements Constants {
     
     public Turret(boolean server, Terrain terrain, Wind wind) {
         this.server = server;
-        this.turretX = (server ? 5 : Constants.WIDTH - 5);
+        this.turretX = (server ? 5 : WIDTH - 5);
         this.terrain = terrain;
         this.wind = wind;
-        barrelRadius = Constants.WIDTH / 20;
+        barrelRadius = WIDTH / 20;
         shootInfo = new ShootInfo();
         reinit();
     }
@@ -58,9 +63,9 @@ public class Turret implements Constants {
     
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
-        g.drawLine(turretX, Constants.HEIGHT - turretY, barrelX, Constants.HEIGHT - barrelY);
+        g.drawLine(turretX, HEIGHT - turretY, barrelX, HEIGHT - barrelY);
         g.setColor(server ? Color.BLUE : Color.RED);
-        g.fillArc(turretX - TURRET_WIDTH / 2, Constants.HEIGHT - turretY - TURRET_HEIGHT / 2,
+        g.fillArc(turretX - TURRET_WIDTH / 2, HEIGHT - turretY - TURRET_HEIGHT / 2,
                 TURRET_WIDTH, TURRET_HEIGHT, 0, 180);
         if (shootState) {
             shootInfo.update(server);
@@ -83,7 +88,7 @@ public class Turret implements Constants {
             g.setColor(Color.RED);
             double x = barrelX;
             double y = barrelY;
-            final double speed = shotPower * (Constants.WIDTH / 80d);
+            final double speed = shotPower * (WIDTH / 80d);
             final double windSpeed = wind.getSpeed();
             final double speedX = speed * Math.cos(barrelAngle);
             final double vsin = speed * Math.sin(barrelAngle);
@@ -98,8 +103,8 @@ public class Turret implements Constants {
                 y += speedY;
                 t += 0.01;
                 
-                g.drawLine((int) x, Constants.HEIGHT - (int) y, (int) x, Constants.HEIGHT - (int) y);
-                isOver = (x < 0) || (x >= Constants.WIDTH) || (y < 0);
+                g.drawLine((int) x, HEIGHT - (int) y, (int) x, HEIGHT - (int) y);
+                isOver = (x < 0) || (x >= WIDTH) || (y < 0);
             } while (!isOver);
         }
     }
@@ -111,8 +116,8 @@ public class Turret implements Constants {
         if (!server) angle = Math.PI - angle;
         if ( (0d <= angle) && (angle <= ANGLE_90) ) {
             barrelAngle = angle;
-            final int xlocal = (server ? x : Constants.WIDTH - x);
-            shotPower = Math.sqrt(xlocal*xlocal + y*y) / (double) Constants.WIDTH;
+            final int xlocal = (server ? x : WIDTH - x);
+            shotPower = Math.sqrt(xlocal*xlocal + y*y) / (double) WIDTH;
             calculateBarrelPosition();
         }
     }
@@ -140,7 +145,7 @@ public class Turret implements Constants {
         shootInfo.reset();
         shootInfo.x = barrelX;
         shootInfo.y = barrelY;
-        final double speed = shotPower * (Constants.WIDTH / 80d);
+        final double speed = shotPower * (WIDTH / 80d);
         shootInfo.windSpeed = wind.getSpeed() * (server ? 1 : -1);
         shootInfo.speedX = speed * Math.cos(barrelAngle);
         shootInfo.vsin = speed * Math.sin(barrelAngle);

@@ -1,5 +1,9 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.GRAVITATION_ACCELERATION;
+import static com.annimon.turrets.Constants.HEIGHT;
+import static com.annimon.turrets.Constants.PLAYERS_BLOCK_COUNT;
+import static com.annimon.turrets.Constants.WIDTH;
 import java.awt.Color;
 import java.awt.Graphics2D;
 
@@ -7,7 +11,7 @@ import java.awt.Graphics2D;
  *
  * @author aNNiMON
  */
-public class ShootInfo implements Constants {
+public class ShootInfo {
     
     double x, y, speedX;
     double windSpeed, vsin, t;
@@ -28,11 +32,11 @@ public class ShootInfo implements Constants {
     public void draw(Graphics2D g) {
         g.setColor(Color.WHITE);
         final int rad = 2;
-        g.fillArc((int) x - rad, Constants.HEIGHT - (int) y - rad, rad * 2, rad * 2, 0, 360);
+        g.fillArc((int) x - rad, HEIGHT - (int) y - rad, rad * 2, rad * 2, 0, 360);
     }
 
     public boolean isOver() {
-         return (x < 0) || (x >= Constants.WIDTH) || (y < 0);
+         return (x < 0) || (x >= WIDTH) || (y < 0);
     }
     
     public boolean isCollideOpponent(boolean server, Terrain tr) {

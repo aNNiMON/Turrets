@@ -1,7 +1,8 @@
 package com.annimon.turrets.util;
 
 import com.annimon.turrets.Background;
-import com.annimon.turrets.Constants;
+import static com.annimon.turrets.Constants.HEIGHT;
+import static com.annimon.turrets.Constants.WIDTH;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.GradientPaint;
@@ -32,8 +33,7 @@ public class GuiUtil {
         }
     }
     
-    public static class PlanetBackground extends javax.swing.plaf.LayerUI<JComponent>
-                                         implements Constants {
+    public static class PlanetBackground extends javax.swing.plaf.LayerUI<JComponent> {
         
         private final BufferedImage image;
         

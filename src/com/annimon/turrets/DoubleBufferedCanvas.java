@@ -1,5 +1,6 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.SCREEN_DIMENSION;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -22,7 +23,7 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
     
     public DoubleBufferedCanvas() {
         setSize(Constants.WIDTH, Constants.HEIGHT);
-        setPreferredSize(Constants.SCREEN_DIMENSION);
+        setPreferredSize(SCREEN_DIMENSION);
         
         addMouseListener(DoubleBufferedCanvas.this);
         addMouseMotionListener(DoubleBufferedCanvas.this);

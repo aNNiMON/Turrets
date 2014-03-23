@@ -1,5 +1,6 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.RESIZABLE;
 import com.annimon.turrets.util.GuiUtil;
 import java.awt.Component;
 import javax.swing.JFrame;
@@ -26,7 +27,7 @@ public class Main extends JFrame {
 
     public Main() {
         super("Turrets");
-        setResizable(Constants.RESIZABLE);
+        setResizable(RESIZABLE);
         setLocationByPlatform(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         

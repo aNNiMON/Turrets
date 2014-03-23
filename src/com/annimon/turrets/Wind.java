@@ -1,5 +1,7 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.MAX_WIND_STRENGTH;
+import static com.annimon.turrets.Constants.WIDTH;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
 import java.awt.FontMetrics;
@@ -18,14 +20,14 @@ public class Wind {
     }
     
     public void change() {
-        speed = Util.rand(-Constants.MAX_WIND_STRENGTH, Constants.MAX_WIND_STRENGTH);
+        speed = Util.rand(-MAX_WIND_STRENGTH, MAX_WIND_STRENGTH);
     }
     
     public void drawInfo(Graphics2D g, FontMetrics metrics) {
-        final int speedPercent = (int) (Math.abs(speed) * 100d / Constants.MAX_WIND_STRENGTH);
+        final int speedPercent = (int) (Math.abs(speed) * 100d / MAX_WIND_STRENGTH);
         final String value = String.valueOf(speedPercent);
         final int valueWidth = metrics.stringWidth(value);
-        final int x = (Constants.WIDTH - valueWidth) / 2;
+        final int x = (WIDTH - valueWidth) / 2;
         final int y = metrics.getHeight();
         
         g.setColor(Color.RED);
