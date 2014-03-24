@@ -106,7 +106,7 @@ public class OptionsPanel extends JPanel {
             
             final String ip = ipTextField.getText();
             if (validateIp(ip)) Prefs.getInstance().setLastIp(ip);
-            Main.getInstance().switchLayout(Main.getInstance().getMainMenu());
+            Main.getInstance().switchToMainMenu();
         }
     };
     
@@ -119,4 +119,4 @@ public class OptionsPanel extends JPanel {
         }
     }
 
-}
+};

@@ -40,8 +40,8 @@ public class Main extends JFrame {
         Sound.setEnabled(Prefs.getInstance().soundEnabled());
     }
     
-    public Component getMainMenu() {
-        return mainMenu;
+    public void switchToMainMenu() {
+        switchLayout(mainMenu);
     }
     
     public void switchLayout(Component component) {

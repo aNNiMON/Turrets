@@ -211,7 +211,7 @@ public class GameCanvas extends DoubleBufferedCanvas implements Runnable, Networ
                 socketHelper.close();
             } catch (IOException ex) { }
         }
-        Main.getInstance().switchLayout(Main.getInstance().getMainMenu());
+        Main.getInstance().switchToMainMenu();
     }
     
     private boolean allowMove() {
