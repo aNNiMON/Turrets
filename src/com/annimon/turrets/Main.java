@@ -50,5 +50,6 @@ public class Main extends JFrame {
         component.setFocusable(true);
         component.requestFocus();
         pack();
+        repaint();
     }
 }
