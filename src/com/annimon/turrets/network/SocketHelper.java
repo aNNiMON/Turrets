@@ -44,6 +44,7 @@ public final class SocketHelper extends Thread {
             } catch (IOException ex) {
                 ExceptionHandler.handle(ex);
                 listener.onStatusChanged(NetworkListener.ON_DISCONNECT, null);
+                break;
             }
             try {
                 Thread.sleep(200);
