@@ -101,8 +101,10 @@ public class OptionsPanel extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            Sound.setEnabled(soundCheckBox.isSelected());
-            Prefs.getInstance().setSoundEnabled(soundCheckBox.isSelected());
+            final boolean soundEnabled = soundCheckBox.isSelected();
+            Sound.setEnabled(soundEnabled);
+            Sound.CLICK.play();
+            Prefs.getInstance().setSoundEnabled(soundEnabled);
             
             final String ip = ipTextField.getText();
             if (validateIp(ip)) Prefs.getInstance().setLastIp(ip);
