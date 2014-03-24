@@ -25,7 +25,7 @@ import javax.swing.text.MaskFormatter;
  *
  * @author aNNiMON
  */
-public class OptionsPanel extends JPanel {
+public final class OptionsPanel extends JPanel {
     
     private static final Font FONT = new Font("Stencil", 1, 30);
     private static final int VERT_INSET = 80, HOR_INSET = 50;

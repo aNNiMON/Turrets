@@ -11,7 +11,7 @@ import java.awt.Graphics2D;
  *
  * @author aNNiMON
  */
-public class ShootInfo {
+public final class ShootInfo {
     
     double x, y, speedX;
     double windSpeed, vsin, t;

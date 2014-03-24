@@ -4,7 +4,7 @@ package com.annimon.turrets.util;
  *
  * @author aNNiMON
  */
-public class Util {
+public final class Util {
     
     private static final RandomExt random = new RandomExt();
     

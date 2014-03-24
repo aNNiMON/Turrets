@@ -6,7 +6,7 @@ import java.util.Random;
  * Extended random
  * @author aNNiMON
  */
-public class RandomExt extends Random {
+public final class RandomExt extends Random {
     
     public RandomExt() {
         super();

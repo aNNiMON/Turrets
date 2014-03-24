@@ -6,7 +6,7 @@ import com.annimon.turrets.Constants;
  * Handle exceptions.
  * @author aNNiMON
  */
-public class ExceptionHandler {
+public final class ExceptionHandler {
     
     private static final boolean DEBUG_MODE = Constants.DEBUG_MODE;
     

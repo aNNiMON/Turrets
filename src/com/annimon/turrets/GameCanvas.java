@@ -21,7 +21,7 @@ import java.io.IOException;
  *
  * @author aNNiMON
  */
-public class GameCanvas extends DoubleBufferedCanvas implements Runnable, NetworkListener {
+public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, NetworkListener {
     
     private static final String WAIT_MESSAGE = "Please, wait...";
     private static final int WIN = 1, LOOSE = -1, NOTHING = 0;

@@ -5,13 +5,12 @@ import com.annimon.turrets.util.GuiUtil;
 import com.annimon.turrets.util.Prefs;
 import java.awt.Component;
 import javax.swing.JFrame;
-import javax.swing.JLayer;
 
 /**
  *
  * @author aNNiMON
  */
-public class Main extends JFrame {
+public final class Main extends JFrame {
     
     private static Main instance;
 

@@ -10,7 +10,7 @@ import java.net.UnknownHostException;
  *
  * @author aNNiMON
  */
-public class GameServer {
+public final class GameServer {
 
     private final ServerSocket serverSocket;
     private final SocketHelper helper;

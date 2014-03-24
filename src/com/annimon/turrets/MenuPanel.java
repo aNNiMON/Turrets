@@ -22,7 +22,7 @@ import javax.swing.event.ListSelectionListener;
  * Main menu
  * @author aNNiMON
  */
-public class MenuPanel extends JPanel {
+public final class MenuPanel extends JPanel {
     
     private static final String[] MENU_ITEMS = {
         "Create Game", "Join", "Options", "Help", "Exit"

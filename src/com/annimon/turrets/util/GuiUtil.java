@@ -17,7 +17,7 @@ import javax.swing.plaf.LayerUI;
  *
  * @author aNNiMON
  */
-public class GuiUtil {
+public final class GuiUtil {
     
     public static <T extends JComponent> JLayer<T> createPlanetLayer(T component) {
         return new JLayer<>(component, (LayerUI<T>) new PlanetBackground());

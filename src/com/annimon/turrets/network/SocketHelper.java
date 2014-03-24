@@ -11,7 +11,7 @@ import java.net.Socket;
  *
  * @author aNNiMON
  */
-public class SocketHelper extends Thread {
+public final class SocketHelper extends Thread {
 
     private final Socket socket;
     private final DataInputStream dis;

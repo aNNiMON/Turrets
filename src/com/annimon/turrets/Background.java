@@ -10,7 +10,7 @@ import java.awt.Graphics;
  *
  * @author aNNiMON
  */
-public class Background {
+public final class Background {
     
     private static final int STARS_COUNT = (int) Math.sqrt(WIDTH * HEIGHT);
     

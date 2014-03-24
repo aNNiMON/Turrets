@@ -12,7 +12,7 @@ import java.awt.LinearGradientPaint;
  * Destructible terrain.
  * @author aNNiMON
  */
-public class Terrain {
+public final class Terrain {
 
     private static final Color[] TERRAIN_COLOR = {
         new Color(0xFF33CE2B), new Color(0xFF1C7317)

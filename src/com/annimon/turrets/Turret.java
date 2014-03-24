@@ -12,7 +12,7 @@ import java.awt.Graphics2D;
  *
  * @author aNNiMON
  */
-public class Turret {
+public final class Turret {
     
     public static final boolean SERVER = true, CLIENT = false;
     

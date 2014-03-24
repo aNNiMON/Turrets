@@ -8,7 +8,7 @@ import java.net.Socket;
  *
  * @author aNNiMON
  */
-public class GameClient {
+public final class GameClient {
 
     private final SocketHelper helper;
 

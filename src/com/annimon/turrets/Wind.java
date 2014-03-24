@@ -11,7 +11,7 @@ import java.awt.Graphics2D;
  *
  * @author aNNiMON
  */
-public class Wind {
+public final class Wind {
     
     private double speed;
 
