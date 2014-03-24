@@ -1,6 +1,7 @@
 package com.annimon.turrets;
 
 import static com.annimon.turrets.Constants.SCREEN_DIMENSION;
+import com.annimon.turrets.util.GuiUtil;
 import com.annimon.turrets.util.Prefs;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -83,6 +84,10 @@ public class MenuPanel extends JPanel {
                     }
                     Main.getInstance().switchLayout(canvas);
                     new Thread(canvas).start();
+                    break;
+                case 2: // Options
+                    Main.getInstance().switchLayout(
+                            GuiUtil.createPlanetLayer(new OptionsPanel()));
                     break;
                 case 4:
                     System.exit(0);

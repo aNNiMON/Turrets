@@ -32,7 +32,7 @@ public class Main extends JFrame {
         setLocationByPlatform(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        mainMenu = new JLayer<>(new MenuPanel(), new GuiUtil.PlanetBackground());
+        mainMenu = GuiUtil.createPlanetLayer(new MenuPanel());
         add(mainMenu);
         pack();
         
