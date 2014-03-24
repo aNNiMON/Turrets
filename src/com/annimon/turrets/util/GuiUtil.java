@@ -10,12 +10,18 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
+import javax.swing.JLayer;
+import javax.swing.plaf.LayerUI;
 
 /**
  *
  * @author aNNiMON
  */
 public class GuiUtil {
+    
+    public static <T extends JComponent> JLayer<T> createPlanetLayer(T component) {
+        return new JLayer<>(component, (LayerUI<T>) new PlanetBackground());
+    }
 
     public static class GradientBackground extends javax.swing.plaf.LayerUI<JComponent> {
 
