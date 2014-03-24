@@ -243,7 +243,7 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
         public void shootComplete(boolean hitOpponent) {
             serverMove = false;
             if (hitOpponent) {
-                finishRound(serverInstance);
+                finishRound(true);
             }
         }
     };
@@ -254,7 +254,7 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
         public void shootComplete(boolean hitOpponent) {
             serverMove = true;
             if (hitOpponent) {
-                finishRound(!serverInstance);
+                finishRound(false);
             }
         }
     };
