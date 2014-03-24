@@ -35,7 +35,7 @@ public final class Prefs {
     }
     
     public String lastIp() {
-        return prefs.get(LAST_IP, "127.0.0.1");
+        return prefs.get(LAST_IP, "127.000.000.001");
     }
     
     public void setLastIp(String ip) {
