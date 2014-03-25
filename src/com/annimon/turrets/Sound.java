@@ -34,7 +34,7 @@ public enum Sound {
     }
     
     public void play() {
-        if (enabled) {
+        if (enabled && (soundClip != null)) {
             soundClip.setFramePosition(0);
             soundClip.start();
         }
@@ -48,6 +48,9 @@ public enum Sound {
                 clip = AudioSystem.getClip();
                 clip.open(ais);
             }
+        } catch (IllegalArgumentException iae) {
+            Sound.setEnabled(false);
+            ExceptionHandler.handle(iae);
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
             ExceptionHandler.handle(ex);
         }
