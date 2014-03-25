@@ -1,6 +1,6 @@
 package com.annimon.turrets;
 
-import static com.annimon.turrets.Constants.FONT_NAME;
+import static com.annimon.turrets.Constants.GAME_FONT;
 import static com.annimon.turrets.Constants.MAX_ROUNDS;
 import com.annimon.turrets.Turret.TurretInfo;
 import com.annimon.turrets.network.GameClient;
@@ -10,7 +10,6 @@ import com.annimon.turrets.network.SocketHelper;
 import com.annimon.turrets.util.ExceptionHandler;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -28,7 +27,6 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
     private static final String WIN_MESSAGE = "YOU WIN", LOOSE_MESSAGE = "YOU LOOSE";
 
     private final BufferedImage background;
-    private final Font font;
     private Terrain terrain;
     private Turret serverTurret, clientTurret;
     private Turret instanceTurret;
@@ -46,7 +44,6 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
         
         background = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
         initBackground();
-        font = new Font(FONT_NAME, Font.PLAIN, 24);
         
         wind = new Wind();
         gameStarted = false;
@@ -58,9 +55,9 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
     
     @Override
     protected void draw(Graphics2D g) {
-        final FontMetrics metrics = g.getFontMetrics(font);
+        final FontMetrics metrics = g.getFontMetrics(GAME_FONT);
         g.drawImage(background, 0, 0, null);
-        g.setFont(font);
+        g.setFont(GAME_FONT);
         if (winState != NOTHING) {
             g.setColor(Color.WHITE);
             final String text = (winState == WIN) ? WIN_MESSAGE : LOOSE_MESSAGE;
