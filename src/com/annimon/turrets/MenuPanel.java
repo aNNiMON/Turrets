@@ -90,6 +90,10 @@ public final class MenuPanel extends JPanel {
                     Main.getInstance().switchLayout(
                             GuiUtil.createPlanetLayer(new OptionsPanel()));
                     break;
+                case 3: // Help
+                    Main.getInstance().switchLayout(
+                            GuiUtil.createPlanetLayer(new HelpPanel()));
+                    break;
                 case 4:
                     System.exit(0);
                     break;
