@@ -69,6 +69,7 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
             serverTurret.draw(g);
             clientTurret.draw(g);
             wind.drawInfo(g, metrics);
+            drawStatus(g, metrics);
         } else {
             g.setColor(Color.WHITE);
             final String str;
@@ -78,6 +79,18 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
             final int x = (Constants.WIDTH - metrics.stringWidth(str)) / 2;
             g.drawString(str, x, Constants.HEIGHT - metrics.getHeight() * 2);
         }
+    }
+    
+    private void drawStatus(Graphics2D g, FontMetrics metrics) {
+        final String leftLabel = (serverInstance ? "YOU" : "ENEMY") + ": " + serverWinCount;
+        final String rightLabel = (serverInstance ? "ENEMY" : "YOU") + ": " + clientWinCount;
+        final int xBound = Constants.WIDTH / 16;
+        final int rightLabelWidth = metrics.stringWidth(rightLabel);
+        final int y = metrics.getHeight();
+        g.setColor(Color.BLUE);
+        g.drawString(leftLabel, xBound, y);
+        g.setColor(Color.RED);
+        g.drawString(rightLabel, Constants.WIDTH - rightLabelWidth - xBound, y);
     }
     
     @Override
