@@ -13,6 +13,7 @@ public final class Constants {
     public static final int WIDTH = 800, HEIGHT = 600;
     public static final boolean RESIZABLE = false;
     public static final Dimension SCREEN_DIMENSION = new Dimension(WIDTH, HEIGHT);
+    public static final String MENU_FONT_NAME = "Stencil";
     public static final Font GAME_FONT = new Font("Times New Roman", Font.PLAIN, 24);
     
     // Parameters

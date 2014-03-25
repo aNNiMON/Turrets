@@ -1,5 +1,6 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.MENU_FONT_NAME;
 import static com.annimon.turrets.Constants.SCREEN_DIMENSION;
 import com.annimon.turrets.util.ExceptionHandler;
 import com.annimon.turrets.util.Prefs;
@@ -27,7 +28,7 @@ import javax.swing.text.MaskFormatter;
  */
 public final class OptionsPanel extends JPanel {
     
-    private static final Font FONT = new Font("Stencil", 1, 30);
+    private static final Font FONT = new Font(MENU_FONT_NAME, 1, 30);
     private static final int VERT_INSET = 80, HOR_INSET = 50;
     
     private final JCheckBox soundCheckBox;

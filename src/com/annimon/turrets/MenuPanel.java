@@ -1,5 +1,6 @@
 package com.annimon.turrets;
 
+import static com.annimon.turrets.Constants.MENU_FONT_NAME;
 import static com.annimon.turrets.Constants.SCREEN_DIMENSION;
 import com.annimon.turrets.util.GuiUtil;
 import com.annimon.turrets.util.Prefs;
@@ -36,7 +37,7 @@ public final class MenuPanel extends JPanel {
         // Init menu list
         menuList = new JList<>(MENU_ITEMS);
         menuList.setOpaque(false);
-        menuList.setFont(new Font("Stencil", Font.BOLD, 42));
+        menuList.setFont(new Font(MENU_FONT_NAME, Font.BOLD, 42));
         menuList.setForeground(Color.GRAY);
         menuList.setBackground(Color.BLACK);
         menuList.setSelectionBackground(Color.BLACK);
@@ -53,7 +54,7 @@ public final class MenuPanel extends JPanel {
         // Init title
         final JLabel titleLabel = new JLabel("Turrets Online");
         titleLabel.setForeground(TITLE_COLOR);
-        titleLabel.setFont(new Font("Stencil", Font.BOLD, 70));
+        titleLabel.setFont(new Font(MENU_FONT_NAME, Font.BOLD, 70));
         titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
         
         // Init panel
