@@ -30,7 +30,7 @@ public final class Wind {
         final int x = (WIDTH - valueWidth) / 2;
         final int y = metrics.getHeight();
         
-        g.setColor(Color.RED);
+        g.setColor(Color.LIGHT_GRAY);
         if (speed < 0) {
             g.drawString("←", x - 2 * valueWidth, y);
         } else if (speed > 0) {
