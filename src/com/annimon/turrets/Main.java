@@ -15,7 +15,7 @@ public final class Main extends JFrame {
     private static Main instance;
 
     public static void main(String[] args) {
-        Main.getInstance().setVisible(true);
+        getInstance().setVisible(true);
     }
     
     public static synchronized Main getInstance() {
