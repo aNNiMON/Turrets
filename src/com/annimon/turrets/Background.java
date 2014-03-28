@@ -47,7 +47,7 @@ public final class Background {
         
         g.setColor(color);
         for (int y = -rad; y < rad; y++) {
-            int x1 = (int) (Math.sqrt(rad * rad - y * y));
+            final int x1 = (int) (Math.sqrt(rad * rad - y * y));
             for (int x = -x1; x < x1; x++) {
                 final int n = (int) (Util.rand(x1) / shade);
                 if (n > x1 + x) {

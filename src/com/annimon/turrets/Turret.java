@@ -33,7 +33,7 @@ public final class Turret {
     // Shooting
     private boolean shootState;
     private final ShootInfo shootInfo;
-    private final Terrain terrain; // TODO GameInfo
+    private final Terrain terrain;
     private final Wind wind;
     private TurretListener listener;
     
