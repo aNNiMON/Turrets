@@ -47,7 +47,7 @@ public final class SocketHelper extends Thread {
                 break;
             }
             try {
-                Thread.sleep(200);
+                sleep(200);
             } catch (InterruptedException ex) { }
         }
     }

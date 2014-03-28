@@ -110,7 +110,7 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
         public void run() {
             while (keepRunning) {
                 try {
-                    Thread.sleep(25);
+                    sleep(25);
                 } catch (InterruptedException ex) {}
                 repaint();
             }
