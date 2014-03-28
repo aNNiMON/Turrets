@@ -19,7 +19,7 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
     
     private final Graphics2D G;
     private final BufferedImage buffer;
-    private final DrawingThread thread;
+    private final Thread thread;
     
     public DoubleBufferedCanvas() {
         setSize(Constants.WIDTH, Constants.HEIGHT);
@@ -31,7 +31,7 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
         
         buffer = new BufferedImage(Constants.WIDTH, Constants.HEIGHT, BufferedImage.TYPE_INT_RGB);
         G = buffer.createGraphics();
-        thread = new DrawingThread();
+        thread = new Thread(this::redraw);
         thread.start();
     }
 
@@ -102,18 +102,12 @@ public abstract class DoubleBufferedCanvas extends Canvas implements MouseListen
     public void keyReleased(KeyEvent e) {
     }
     
-    private final class DrawingThread extends Thread {
-
-        private boolean keepRunning = true;
-
-        @Override
-        public void run() {
-            while (keepRunning) {
-                try {
-                    sleep(25);
-                } catch (InterruptedException ex) {}
-                repaint();
-            }
+    private void redraw() {
+        while (true) {            
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException ex) {}
+            repaint(); 
         }
     }
 }
