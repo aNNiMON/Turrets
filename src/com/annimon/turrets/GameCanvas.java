@@ -247,25 +247,17 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
         instanceTurret.setBarrelParams(x, Constants.HEIGHT - y);
     }
     
-    private final Turret.TurretListener serverTurretListener = new Turret.TurretListener() {
-
-        @Override
-        public void shootComplete(boolean hitOpponent) {
-            serverMove = false;
-            if (hitOpponent) {
-                finishRound(true);
-            }
+    private final Turret.TurretListener serverTurretListener = (hitOpponent) -> {
+        serverMove = false;
+        if (hitOpponent) {
+            finishRound(true);
         }
     };
     
-    private final Turret.TurretListener clientTurretListener = new Turret.TurretListener() {
-
-        @Override
-        public void shootComplete(boolean hitOpponent) {
-            serverMove = true;
-            if (hitOpponent) {
-                finishRound(false);
-            }
+    private final Turret.TurretListener clientTurretListener = (hitOpponent) -> {
+        serverMove = true;
+        if (hitOpponent) {
+            finishRound(false);
         }
     };
 }

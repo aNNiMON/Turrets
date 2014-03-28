@@ -6,8 +6,6 @@ import com.annimon.turrets.util.ExceptionHandler;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JEditorPane;
@@ -16,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 
 /**
  *
@@ -49,25 +46,15 @@ public final class HelpPanel extends JPanel {
                 "<a href=\"https://github.com/aNNiMON/turrets\">GitHub</a></p>" +
                 "<br/><p>Ukraine, Donetsk 2014</p>" +
                 "</html>");
-        infoPane.addHyperlinkListener(new HyperlinkListener() {
-
-            @Override
-            public void hyperlinkUpdate(HyperlinkEvent hle) {
-                if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType())) {
-                    openBrowser(hle.getURL().toString());
-                }
+        infoPane.addHyperlinkListener((e) -> {
+            if (HyperlinkEvent.EventType.ACTIVATED.equals(e.getEventType())) {
+                openBrowser(e.getURL().toString());
             }
         });
         add(infoPane, BorderLayout.CENTER);
         
         final JButton backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                Main.getInstance().switchToMainMenu();
-            }
-        });
+        backButton.addActionListener((e) -> Main.getInstance().switchToMainMenu());
         backButton.setForeground(Color.GRAY);
         backButton.setFont(new Font(MENU_FONT_NAME, 1, 30));
         backButton.setBorderPainted(false);
