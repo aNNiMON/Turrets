@@ -25,7 +25,7 @@ public final class Wind {
     
     public void drawInfo(Graphics2D g, FontMetrics metrics) {
         final int speedPercent = (int) (Math.abs(speed) * 100d / MAX_WIND_STRENGTH);
-        final String value = String.valueOf(speedPercent);
+        final String value = Integer.toString(speedPercent);
         final int valueWidth = metrics.stringWidth(value);
         final int x = (WIDTH - valueWidth) / 2;
         final int y = metrics.getHeight();
@@ -36,7 +36,7 @@ public final class Wind {
         } else if (speed > 0) {
             g.drawString("→", x + 2 * valueWidth, y);
         }
-        g.drawString(String.valueOf(speedPercent), x, y);
+        g.drawString(value, x, y);
     }
     
 }
