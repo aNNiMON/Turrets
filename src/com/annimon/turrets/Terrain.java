@@ -41,14 +41,14 @@ public final class Terrain {
     
     public void destroyTerrain(int x) {
         final int position = x / blockSize;
-        final int explosionSize = PLAYERS_BLOCK_COUNT / 2;
         if ( (position <= PLAYERS_BLOCK_COUNT) ||
              (position >= blocksCount - PLAYERS_BLOCK_COUNT - 1) ) return;
         
-        blockHeights[position] -= explosionSize * 2;
+        final int explosionSize = PLAYERS_BLOCK_COUNT / 2;
+        blockHeights[position] -= PLAYERS_BLOCK_COUNT; // explosionSize * 2;
         for (int i = 1; i < explosionSize; i++) {
-            blockHeights[position - i] -= explosionSize * 2 - i;
-            blockHeights[position + i] -= explosionSize * 2 - i;
+            blockHeights[position - i] -= PLAYERS_BLOCK_COUNT - i;// explosionSize * 2 - i;
+            blockHeights[position + i] -= PLAYERS_BLOCK_COUNT - i;// explosionSize * 2 - i;
         }
         for (int i = position - explosionSize; i < position + explosionSize; i++) {
             if (blockHeights[i] < 0) blockHeights[i] = 0;
