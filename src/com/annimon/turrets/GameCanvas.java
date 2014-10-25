@@ -11,7 +11,6 @@ import com.annimon.turrets.util.ExceptionHandler;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
 import java.awt.FontMetrics;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -154,9 +153,7 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
     }
     
     private void initBackground() {
-        final Graphics g = background.createGraphics();
-        new Background().draw(g);
-        g.dispose();
+        Background.drawToImage(background);
     }
     
     private void startGame(long seed) {

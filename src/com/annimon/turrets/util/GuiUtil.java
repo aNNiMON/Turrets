@@ -22,42 +22,46 @@ public final class GuiUtil {
     public static <T extends JComponent> JLayer<T> createPlanetLayer(T component) {
         return new JLayer<>(component, (LayerUI<T>) new PlanetBackground());
     }
-
-    public static class GradientBackground extends javax.swing.plaf.LayerUI<JComponent> {
+    
+    public static <T extends JComponent> JLayer<T> createGradientLayer(T component) {
+        return new JLayer<>(component, (LayerUI<T>) new GradientBackground());
+    }
+    
+    private static class GradientBackground extends BackgroundLayer {
 
         @Override
-        public void paint(Graphics g, JComponent component) {
-            super.paint(g, component);
-            final int w = component.getWidth();
-            final int h = component.getHeight();
-            
-            Graphics2D g2d = (Graphics2D) g.create();
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.25f));
+        protected void paint(Graphics2D g2d, int w, int h) {
             g2d.setPaint(new GradientPaint(0, 0, Color.BLACK, 0, h, Color.GREEN));
             g2d.fillRect(0, 0, w, h);
-            g2d.dispose();
         }
     }
     
-    public static class PlanetBackground extends javax.swing.plaf.LayerUI<JComponent> {
+    private static class PlanetBackground extends BackgroundLayer {
         
         private final BufferedImage image;
         
         public PlanetBackground() {
             image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
-            Graphics g = image.createGraphics();
-            new Background().draw(g);
-            g.dispose();
+            Background.drawToImage(image);
         }
+
+        @Override
+        protected void paint(Graphics2D g2d, int w, int h) {
+            g2d.drawImage(image, 0, 0, null);
+        }
+    }
+    
+    private static abstract class BackgroundLayer extends LayerUI<JComponent> {
 
         @Override
         public void paint(Graphics g, JComponent component) {
             super.paint(g, component);
-            
             Graphics2D g2d = (Graphics2D) g.create();
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.25f));
-            g2d.drawImage(image, 0, 0, null);
+            paint(g2d, component.getWidth(), component.getHeight());
             g2d.dispose();
         }
+        
+        protected abstract void paint(Graphics2D g, int w, int h);
     }
 }

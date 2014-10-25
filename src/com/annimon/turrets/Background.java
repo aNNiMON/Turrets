@@ -5,6 +5,7 @@ import static com.annimon.turrets.Constants.WIDTH;
 import com.annimon.turrets.util.Util;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -12,12 +13,18 @@ import java.awt.Graphics;
  */
 public final class Background {
     
+    public static void drawToImage(BufferedImage img) {
+        final Graphics g = img.createGraphics();
+        new Background().draw(g);
+        g.dispose();
+    }
+    
     private static final int STARS_COUNT = (int) Math.sqrt(WIDTH * HEIGHT);
     
     private final Color bg, color;
     private final double shadeAmount;
 
-    public Background() {
+    private Background() {
         bg = new Color(Util.randomColor(0, 15));
         color = new Color(Util.randomColor(150, 235));
         shadeAmount = Util.rand(0.5, 2.5);
