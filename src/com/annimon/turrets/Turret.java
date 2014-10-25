@@ -7,6 +7,7 @@ import static com.annimon.turrets.Constants.PLAYERS_BLOCK_COUNT;
 import static com.annimon.turrets.Constants.WIDTH;
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.Optional;
 
 /**
  *
@@ -35,7 +36,7 @@ public final class Turret {
     private final ShootInfo shootInfo;
     private final Terrain terrain;
     private final Wind wind;
-    private TurretListener listener;
+    private Optional<TurretListener> listener;
     
     public Turret(boolean server, Terrain terrain, Wind wind) {
         this.server = server;
@@ -58,7 +59,7 @@ public final class Turret {
     }
     
     public void setTurretListener(TurretListener listener) {
-        this.listener = listener;
+        this.listener = Optional.of(listener);
     }
     
     public void draw(Graphics2D g) {
@@ -72,16 +73,16 @@ public final class Turret {
             shootInfo.draw(g);
             if (shootInfo.isOver()) {
                 shootState = false;
-                if (listener != null) listener.shootComplete(false);
+                listener.ifPresent(t -> t.shootComplete(false));
             } else if (shootInfo.isCollideOpponent(server, terrain)) {
                 shootState = false;
                 Sound.EXPLOSION_2.play();
-                if (listener != null) listener.shootComplete(true);
+                listener.ifPresent(t -> t.shootComplete(true));
             } else if (shootInfo.isCollideTerrain(terrain)) {
                 shootState = false;
                 Sound.EXPLOSION_1.play();
                 terrain.destroyTerrain((int) shootInfo.x);
-                if (listener != null) listener.shootComplete(false);
+                listener.ifPresent(t -> t.shootComplete(false));
             }
         }
         if (DEBUG_MODE) {
@@ -157,6 +158,7 @@ public final class Turret {
         barrelY = (int) (turretY + barrelRadius * shotPower * Math.sin(barrelAngle));
     }
     
+    @FunctionalInterface
     public interface TurretListener {
         void shootComplete(boolean hitOpponent);
     }
