@@ -23,7 +23,7 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
     
     private static final String WAIT_MESSAGE = "Please, wait...";
     private static final int WIN = 1, LOOSE = -1, NOTHING = 0;
-    private static final String WIN_MESSAGE = "YOU WIN", LOOSE_MESSAGE = "YOU LOOSE";
+    private static final String WIN_MESSAGE = "YOU WIN", LOSE_MESSAGE = "YOU LOSE";
 
     private final BufferedImage background;
     private Terrain terrain;
@@ -59,7 +59,7 @@ public final class GameCanvas extends DoubleBufferedCanvas implements Runnable, 
         g.setFont(GAME_FONT);
         if (winState != NOTHING) {
             g.setColor(Color.WHITE);
-            final String text = (winState == WIN) ? WIN_MESSAGE : LOOSE_MESSAGE;
+            final String text = (winState == WIN) ? WIN_MESSAGE : LOSE_MESSAGE;
             final int x = (Constants.WIDTH - metrics.stringWidth(text)) / 2;
             final int y = (Constants.HEIGHT + metrics.getHeight()) / 2;
             g.drawString(text, x, y);
